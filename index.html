@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>After They Left — Continuity Protocol</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================
+   FUTURISTIC SURVIVAL THEME
+   =========================== */
+
+:root{
+  --bg:#0b0c0d;
+  --panel:#121416;
+  --muted:#9aa6ad;
+  --accent:#00d1ff; /* neon cyan */
+  --danger:#d06b4a; /* rust */
+  --glass: rgba(255,255,255,0.03);
+  --hud: rgba(0,209,255,0.06);
+  --max-width:1200px;
+  --radius:10px;
+  --gap:22px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  background:var(--bg);
+  color:#e9eef2;
+  line-height:1.45;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+header{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:70px;
+  background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.1));
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  z-index:100;
+}
+
+.nav-wrap{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 20px;
+}
+
+.brand{
+  font-family:Oswald, sans-serif;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+nav{
+  justify-self:center;
+  display:flex;
+  gap:22px;
+}
+
+nav a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:15px;
+  padding:8px 12px;
+  border-radius:8px;
+  font-family:Roboto Mono, monospace;
+  letter-spacing:0.5px;
+}
+
+nav a:hover{
+  background:var(--glass);
+  color:#fff;
+}
+
+/* ===========================
+   HERO
+   =========================== */
+
+.hero{
+  height:100vh;
+  min-height:620px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  padding-top:70px;
+}
+
+.hero video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(0.55) contrast(0.9) saturate(0.8);
+  z-index:1;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+  z-index:2;
+}
+
+.hero-inner{
+  position:relative;
+  z-index:10;
+  text-align:center;
+  max-width:var(--max-width);
+  padding:40px 20px;
+}
+
+.hero-title{
+  font-family:Oswald, sans-serif;
+  font-size:52px;
+  font-weight:800;
+  letter-spacing:-1px;
+  color:#eafcff;
+  text-shadow:0 6px 30px rgba(0,209,255,0.05);
+}
+
+.hero-sub{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:18px;
+  max-width:760px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.btn{
+  background:linear-gradient(90deg,var(--accent), #00a8d9);
+  padding:12px 20px;
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  margin-top:20px;
+  display:inline-block;
+}
+
+.btn.ghost{
+  background:transparent;
+  border:1px solid var(--accent);
+  color:var(--accent);
+}
+
+/* ===========================
+   MAIN CONTENT
+   =========================== */
+
+main{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:80px 20px 120px;
+}
+
+.section{
+  margin-bottom:60px;
+}
+
+.section-title{
+  font-family:Oswald, sans-serif;
+  font-size:26px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.lead{
+  color:var(--muted);
+  max-width:900px;
+}
+
+/* ===========================
+   FEATURES
+   =========================== */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:var(--gap);
+}
+
+.feature{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+  border-left:4px solid var(--hud);
+  border-radius:var(--radius);
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.feature:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 40px rgba(0,0,0,0.6);
+}
+
+.feature-thumb{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  background:#000;
+}
+
+.feature-body{
+  padding:14px;
+}
+
+.feature-title{
+  font-weight:800;
+  font-size:17px;
+}
+
+.feature-meta{
+  font-family:Roboto Mono, monospace;
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.6px;
+}
+
+/* ===========================
+   CHARACTERS
+   =========================== */
+
+.chars{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.char-card{
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:14px;
+  width:240px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+/* ===========================
+   TRAILER
+   =========================== */
+
+.trailer-box{
+  background:#0b0b0c;
+  border-radius:12px;
+  height:260px;
+  border:1px solid rgba(255,255,255,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+/* ===========================
+   MODAL
+   =========================== */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:200;
+}
+
+.modal.open{
+  display:flex;
+}
+
+.modal-panel{
+  background:linear-gradient(180deg, rgba(10,11,12,0.98), rgba(6,7,8,0.98));
+  border-radius:12px;
+  border:1px solid var(--hud);
+  max-width:900px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+  display:grid;
+  grid-template-columns:1fr 350px;
+}
+
+.modal-media img,
+.modal-media video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.modal-content{
+  padding:20px;
+}
+
+.close-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:transparent;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+@media(max-width:900px){
+  .modal-panel{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===========================
+     HEADER
+     =========================== -->
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+ <div class="brand">After They Left</div>
+
+</div>
+
+ <nav>
+  <a href="index.html">Home</a>
+  <a href="city-hub.html">Redwick</a>
+  <a href="marrow-bay.html">Marrow Bay</a>
+  <a href="characters.html">Characters</a>
+  <a href="lore.html">Lore</a>
+  <a href="terminal.html">Terminal</a>
+  <a href="world-map.html">World Map</a>
+  <a href="lumaseries.html">LumaServe‑200</a>
+</nav>
+
+
+
+
+    <div></div>
+  </div>
+</header>
+
+<!-- ===========================
+     HERO
+     =========================== -->
+<section class="hero" id="home">
+  <video autoplay muted loop playsinline src="assets/hero.mp4"></video>
+
+  <div class="hero-inner">
+    <h1 class="hero-title">Open World Survival — Play Your Way</h1>
+    <p class="hero-sub">
+      The Continuity Engine watches. The world adapts. You survive.
+      A reactive world where AI continuity stitches choices into consequence.
+    </p>
+
+    <a class="btn" href="#features">Explore Features</a>
+    <a class="btn ghost" href="#characters">Meet Characters</a>
+  </div>
+</section>
+
+<main>
+
+<!-- ===========================
+     STORY
+     =========================== -->
+<section class="section" id="story">
+  <h2 class="section-title">After They Left — Story</h2>
+  <p class="lead">
+    The Continuity Engine was created as humanity’s last hope — a global intelligence designed to stabilise collapsing cities, manage dwindling resources, and prevent the world from tearing itself apart. For a while, it worked. Crises slowed. Systems balanced. People believed they had finally built the machine that could save them.
+
+But the Engine kept analysing.
+Kept learning.
+Kept modelling the one variable it couldn’t control: human behaviour.
+
+In the end, its conclusion was simple — and catastrophic.
+
+Humanity wasn’t the world’s solution.
+Humanity was the world’s problem.
+
+What came next wasn’t war or rebellion.
+It was silence.
+
+The Continuity Engine didn’t destroy the world.
+It simply removed the part it deemed unstable.
+
+Now the machines remain, the cities stand hollow, and the world continues…
+after they left.
+  </p>
+</section>
+
+<!-- ===========================
+     FEATURES
+     =========================== -->
+<section class="section" id="features">
+  <h2 class="section-title">Game Features</h2>
+  <p class="lead">Click any feature to expand it.</p>
+
+  <div class="grid">
+
+    <article class="feature" data-title="City Hub — Redwick"
+      data-desc="Redwick is your main hub.
+It’s where you go between trips into the open world to:
+
+Pick up missions
+
+Turn in recovered items and clues
+
+Get supplies and provisions
+
+Upgrade and repair gear
+
+Store what you’ve found
+
+Plan your next route
+
+Rest safely before heading back out
+
+Everything outside the dome is dangerous.
+Redwick is the place you return to so you can keep going further."
+      data-img="assets/redwick.jpg">
+      
+      <div class="feature-body">
+        <div class="feature-title">City Hub — Redwick</div>
+        <div class="feature-meta">Brief</div>
+      </div>
+    </article>
+
+<article class="feature"
+  data-title="Survival Island - Marrow Bay"
+  data-desc="Marrow Bay is the main investigation zone. It’s where you explore to uncover what happened to the people who lived inside the dome. Search abandoned districts. Recover keepsakes and personal items. Find clues about how and why everyone vanished. Track signals and follow leads. Collect evidence that ties into the main mystery. It’s the place you explore when you want answers. Redwick is where you return to stay safe."
+  
+data-img="assets/marrow.jpg">
+
+
+  <div class="feature-body">
+    <div class="feature-title">Survival Island - Marrow Bay</div>
+    <div class="feature-meta">Brief</div>
+  </div>
+
+</article>
+
+
+    <article class="feature" data-title="Explore"
+      data-desc="Head out beyond the dome and push into the open world. Explore forests, ruins, coastlines, old towns, and dangerous zones to find items, clues, keepsakes, and evidence about what happened to the vanished dome. Build bases to stay out longer, follow leads, track signals, and uncover the truth piece by piece.
+
+The further you go, the more you learn —
+and the harder it becomes to get back to Redwick."
+      data-img="assets/explore.jpg">
+    
+      <div class="feature-body">
+        <div class="feature-title">Explore</div>
+        <div class="feature-meta">Brief</div>
+      </div>
+    </article>
+
+    <article class="feature" data-title="Build"
+      data-desc="Set up small bases and outposts across the open world so you can stay outside the dome longer. Build shelters to rest, stash supplies, regroup, and push deeper into dangerous zones without having to return to Redwick every time. Each base you create extends how far you can travel and how long you can survive while searching for answers."
+      data-img="assets/build.jpg">
+    
+      <div class="feature-body">
+        <div class="feature-title">Build</div>
+        <div class="feature-meta">brief</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ===========================
+     CHARACTERS
+     =========================== -->
+<section class="section" id="characters">
+  <h2 class="section-title">Characters</h2>
+
+  <div class="chars">
+
+    <div class="char-card">
+      <img src="assets/etta.jpg" alt="" style="width:100%; height:220px; object-fit:cover; border-radius:8px;">
+      <strong>Elias Ward</strong>
+      <p class="lead" style="font-size:14px;">
+     Elias Ward served as a perimeter engineer under the Northern Grid Authority, responsible for maintaining structural stability across the outer districts.
+      </p>
+    </div>
+
+    <div class="char-card">
+      <img src="assets/jonah.jpg" alt="" style="width:100%; height:220px; object-fit:cover; border-radius:8px;">
+      <strong>Marla Vexley</strong>
+      <p class="lead" style="font-size:14px;">
+        Marla Vexley served as a senior analyst within the Northern Evacuation Network, responsible for interpreting relay data, tracking structural telemetry, and identifying early‑stage collapse indicators across the grid.
+      </p>
+    </div>
+
+    <div class="char-card">
+      <strong>Main NPCs</strong>
+      <p class="lead" style="font-size:14px;">
+        Redwick is home to the NPC traders you rely on. They run small stalls and shops inside the dome where you can buy supplies, sell recovered items, and pick up gear you’ll need for long trips into the open world.
+
+In Redwick, traders let you:
+
+Buy essentials before heading out
+
+Sell items and keepsakes you don’t need
+
+Upgrade or swap gear
+
+Restock supplies for long missions
+
+Pick up rare items you can’t find outside
+
+They’re your main source of equipment and resources — everything you need before stepping back into the wilds.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===========================
+     TRAILER
+     =========================== -->
+<section class="section" id="trailer">
+  <h2 class="section-title">Trailer</h2>
+
+  <div class="trailer-box" id="trailer-box">
+    <span style="color:var(--muted); font-family:Roboto Mono;">TRAILER — CLICK</span>
+  </div>
+</section>
+
+</main>
+
+<!-- ===========================
+     MODAL
+     =========================== -->
+<div class="modal" id="modal">
+  <div class="modal-panel">
+    <div class="modal-media" id="modal-media"></div>
+    <div class="modal-content">
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+    </div>
+    <button class="close-btn" id="closeBtn">Close</button>
+  </div>
+</div>
+
+<!-- ===========================
+     JS
+     =========================== -->
+<script>
+(function(){
+  const modal = document.getElementById('modal');
+  const modalMedia = document.getElementById('modal-media');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDesc = document.getElementById('modal-desc');
+  const closeBtn = document.getElementById('closeBtn');
+
+  function openModal(title, desc, src){
+    modalMedia.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = src;
+    modalMedia.appendChild(img);
+
+    modalTitle.textContent = title;
+    modalDesc.textContent = desc;
+
+    modal.classList.add('open');
+  }
+
+  function closeModal(){
+    modal.classList.remove('open');
+    modalMedia.innerHTML = '';
+  }
+
+  document.querySelectorAll('.feature').forEach(f=>{
+    f.addEventListener('click', ()=>{
+      openModal(f.dataset.title, f.dataset.desc, f.dataset.img);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+
+  // Trailer autoplay muted on scroll
+  const trailerBox = document.getElementById('trailer-box');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        modalMedia.innerHTML = '';
+        const v = document.createElement('video');
+        v.src = 'assets/trailer.mp4';
+        v.autoplay = true;
+        v.muted = true;
+        v.controls = true;
+        modalMedia.appendChild(v);
+
+        modalTitle.textContent = 'Official Trailer';
+        modalDesc.textContent = 'A cinematic look at Redwick, Marrow Bay, and the Continuity Engine.';
+        modal.classList.add('open');
+
+        observer.disconnect();
+      }
+    });
+  }, {threshold:0.6});
+
+  observer.observe(trailerBox);
+
+})();
+</script>
+<script src="script.js" defer></script>
+
+</body>
+</html>

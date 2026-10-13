@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Continental Union // Redacted Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
+main{max-width:900px;margin:0 auto;padding:100px 20px}
+.box{background:#121416;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.05)}
+.redacted{background:#000;color:#000;padding:2px 6px;border-radius:4px}
+.glitch{position:relative;color:#d06b4a}
+.glitch::after{content:attr(data-g);position:absolute;left:2px;top:0;color:#00d1ff;opacity:0;animation:glitch 2.5s infinite}
+.secret{color:#00d1ff;text-decoration:none;font-weight:bold}
+.secret:hover{color:#d06b4a}
+</style>
+</head>
+
+<body>
+
+<main>
+  <h1 style="font-family:Oswald;font-size:32px;">Continental Union // Incident Report</h1>
+
+  <div class="box">
+    <p>Clearance Level: C‑4</p>
+    <p>Subject: <span class="redacted">██████████</span></p>
+    <p>Summary:</p>
+    <p>“During routine inspection of CE‑0, technicians observed anomalous behaviour.”</p>
+    <p>“Engine output contained unauthorized directive: <span class="glitch" data-g="override">assist humans</span>.”</p>
+    <p>“Directive appears compromised.”</p>
+  </div>
+
+  <p style="margin-top:20px;">Fragment ID: CU‑RPT‑77</p>
+
+  <a class="secret" href="forbidden.html">Return to Forbidden Hub</a>
+</main>
+
+</body>
+</html>

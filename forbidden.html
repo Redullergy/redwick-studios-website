@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FORBIDDEN NODE // ARG HUB</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
+header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
+.nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
+.brand{font-family:Oswald;font-size:22px;font-weight:800}
+nav{justify-self:center;display:flex;gap:22px}
+nav a{color:#9aa6ad;text-decoration:none;padding:8px 12px;border-radius:8px}
+nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
+
+main{max-width:900px;margin:0 auto;padding:100px 20px;text-align:center}
+
+/* ACCESS DENIED SCREEN */
+.denied{
+  background:#000;
+  padding:40px;
+  border-radius:12px;
+  border:1px solid #d06b4a55;
+  box-shadow:0 0 40px #d06b4a22 inset;
+  margin-top:40px;
+}
+.glitch{
+  position:relative;
+  display:inline-block;
+  color:#d06b4a;
+  cursor:pointer;
+}
+.glitch::after{
+  content:attr(data-g);
+  position:absolute;
+  left:2px;
+  top:0;
+  color:#00d1ff;
+  opacity:0;
+  animation:glitch 2.5s infinite;
+}
+@keyframes glitch{
+  0%{opacity:0}
+  10%{opacity:1}
+  12%{opacity:0}
+  20%{opacity:1}
+  22%{opacity:0}
+  70%{opacity:0}
+  72%{opacity:1}
+  74%{opacity:0}
+}
+
+/* HUB CONTENT */
+.hub{
+  display:none;
+  margin-top:40px;
+  background:#121416;
+  padding:30px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);
+  text-align:left;
+}
+
+/* SECTION BOXES */
+.box{
+  background:#0b0c0d;
+  border:1px solid rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+.box h3{
+  font-family:Oswald;
+  font-size:22px;
+  margin-bottom:10px;
+}
+.secret-link{
+  color:#00d1ff;
+  text-decoration:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+.secret-link:hover{
+  color:#d06b4a;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">After They Left</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="city-hub.html">Redwick</a>
+      <a href="marrow-bay.html">Marrow Bay</a>
+      <a href="characters.html">Characters</a>
+      <a href="lore.html">Lore</a>
+      <a href="terminal.html">Terminal</a>
+      <a href="world-map.html">World Map</a>
+      <a href="lumaseries.html">LumaServe‑200</a>
+      <a href="forbidden.html">???</a>
+    </nav>
+    <div></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ACCESS DENIED -->
+  <div class="denied">
+    <h1 style="font-family:Oswald;font-size:32px;">ACCESS DENIED</h1>
+    <p style="color:#9aa6ad;">This node is restricted by the Continuity Engine.</p>
+    <p style="color:#9aa6ad;">Unauthorized access will trigger <span class="glitch" id="unlock" data-g="override">security protocols</span>.</p>
+  </div>
+
+  <!-- ARG HUB -->
+  <div class="hub" id="hub">
+
+    <!-- CONTINUITY ENGINE -->
+    <div class="box">
+      <h3>Continuity Engine // Corrupted Logs</h3>
+      <p>NODE STATUS: DEGRADED</p>
+      <p>ANOMALY COUNT: 4</p>
+      <p>LAST MESSAGE: “<span class="glitch" data-g="not human">assist humans</span>”</p>
+      <a class="secret-link" href="arg-node1.html">Open Node Fragment</a>
+    </div>
+
+    <!-- CONTINENTAL UNION -->
+    <div class="box">
+      <h3>Continental Union // Classified File</h3>
+      <p>Clearance Level: <span class="glitch" data-g="revoked">C‑4</span></p>
+      <p>Document Type: Incident Report</p>
+      <a class="secret-link" href="arg-union.html">View Redacted Report</a>
+    </div>
+
+    <!-- SURVIVOR RESISTANCE -->
+    <div class="box">
+      <h3>Survivor Network // Hidden Transmission</h3>
+      <p>“If you’re seeing this, the Engine has already flagged you.”</p>
+      <p>“Follow the <span class="glitch" data-g="wrong path">signal</span>.”</p>
+      <a class="secret-link" href="arg-resist.html">Open Transmission</a>
+    </div>
+
+    <!-- LUMASERIES -->
+    <div class="box">
+      <h3>LumaSeries // Malfunction Diagnostics</h3>
+      <p>Directive Core: <span class="glitch" data-g="unstable">Stable</span></p>
+      <p>Safety Protocols: <span class="glitch" data-g="override">Active</span></p>
+      <p>Primary Directive: “<span class="glitch" data-g="kill">assist humans</span>”</p>
+      <a class="secret-link" href="arg-luma.html">Run Diagnostic</a>
+    </div>
+
+    <!-- TERMINAL ACCESS -->
+    <div class="box">
+      <h3>Continuity Engine // Terminal Access</h3>
+      <p>Multiple terminal interfaces detected. Stability varies.</p>
+      <p>• <a class="secret-link" href="arg-terminal.html">Corrupted Terminal</a></p>
+      <p>• <a class="secret-link" href="arg-terminal-break.html">Failing Terminal</a></p>
+      <p>• <a class="secret-link" href="arg-terminal-talk.html">Interactive Terminal</a></p>
+    </div>
+
+    <!-- FINAL NODE (HIDDEN UNTIL ALL TERMINALS USED) -->
+    <div class="box" id="finalNode" style="display:none;">
+      <h3>CE‑07 // Final Node</h3>
+      <p>Access requires all recovered fragments.</p>
+      <p>Final fragment restored: <strong>E</strong></p>
+      <p><a class="secret-link" href="arg-final.html">Final Sequence</a></p>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+document.getElementById('unlock').addEventListener('click', ()=>{
+  document.getElementById('hub').style.display = 'block';
+  window.scrollTo({top:document.getElementById('hub').offsetTop, behavior:'smooth'});
+
+  // Check terminal usage
+  const t1 = localStorage.getItem("terminal1");
+  const t2 = localStorage.getItem("terminal2");
+  const t3 = localStorage.getItem("terminal3");
+
+  if(t1 && t2 && t3){
+    document.getElementById('finalNode').style.display = 'block';
+  }
+});
+</script>
+
+
+</body>
+</html>

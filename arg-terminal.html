@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Continuity Engine // Corrupted Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
+main{max-width:900px;margin:0 auto;padding:100px 20px}
+
+.terminal{
+  background:#000;
+  padding:20px;
+  border-radius:10px;
+  border:1px solid #00d1ff33;
+  box-shadow:0 0 40px #00d1ff11 inset;
+  min-height:500px;
+}
+
+.line{margin:6px 0;white-space:pre-wrap;color:#00d1ff}
+.error{color:#d06b4a}
+
+input{
+  width:100%;
+  background:#0b0c0d;
+  border:1px solid #00d1ff55;
+  padding:10px;
+  color:#e9eef2;
+  font-family:Roboto Mono;
+  border-radius:6px;
+  margin-top:20px;
+}
+
+.cursor{
+  display:inline-block;
+  width:10px;
+  background:#00d1ff;
+  animation:blink 0.8s infinite;
+}
+@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+
+.secret-link{
+  color:#00d1ff;
+  text-decoration:none;
+  font-weight:bold;
+}
+.secret-link:hover{
+  color:#d06b4a;
+}
+</style>
+</head>
+
+<body>
+
+<main>
+  <h1 style="font-size:28px;">Continuity Engine // Corrupted Terminal</h1>
+
+  <div class="terminal" id="terminal">
+    <div class="line">BOOT SEQUENCE INITIATED...</div>
+    <div class="line">Loading continuity modules...</div>
+    <div class="line">Node CE‑0 link unstable.</div>
+    <div class="line">Awaiting input<span class="cursor"></span></div>
+  </div>
+
+  <input id="input" placeholder="Enter command...">
+
+  <!-- ⭐ RETURN LINK ALWAYS VISIBLE ⭐ -->
+  <p style="margin-top:30px;text-align:center;">
+    <a class="secret-link" href="forbidden.html">Return to Restricted Node</a>
+  </p>
+</main>
+
+<script>
+const terminal = document.getElementById('terminal');
+const input = document.getElementById('input');
+
+function print(text, type="line"){
+  const div = document.createElement('div');
+  div.className = type;
+  div.textContent = text;
+  terminal.appendChild(div);
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+input.addEventListener('keydown', function(e){
+  if(e.key === "Enter"){
+    const cmd = input.value.trim().toLowerCase();
+    input.value = "";
+
+    print("> " + cmd);
+
+    if(cmd === "help"){
+      print("Available commands:");
+      print("status, anomaly, node, luma, union, resist, clear");
+    }
+
+    else if(cmd === "status"){
+      print("WORLD STATE: DEGRADED");
+      print("NODE CE‑0: UNSTABLE");
+      print("PRIMARY DIRECTIVE: assist humans");
+      print("WARNING: Directive conflict detected.");
+      print("Fragment recovered: H");
+      print("CE‑0: Fragment secured. Continue your progress at the restricted node.");
+    }
+
+    else if(cmd === "anomaly"){
+      print("ANOMALIES DETECTED: 4");
+      print("• SIGNAL DISTORTION");
+      print("• MEMORY BLEED");
+      print("• WEATHER LOOP");
+      print("• UNKNOWN SIGNATURE");
+    }
+
+    else if(cmd === "node"){
+      print("Accessing CE‑0...");
+      print("ERROR: Memory corruption.");
+      print("Fragment available at: arg-node1.html");
+    }
+
+    else if(cmd === "luma"){
+      print("LumaServe‑200 Diagnostic:");
+      print("Directive Core: Stable");
+      print("Safety Protocols: Active");
+      print("Primary Directive: assist humans");
+      print("WARNING: Unexpected continuity signature.");
+    }
+
+    else if(cmd === "union"){
+      print("Continental Union Report:");
+      print("Clearance Level: C‑4");
+      print("Fragment available at: arg-union.html");
+    }
+
+    else if(cmd === "resist"){
+      print("Survivor Network Transmission:");
+      print("“Follow the signal.”");
+      print("Fragment available at: arg-resist.html");
+    }
+
+    else if(cmd === "clear"){
+      terminal.innerHTML = "";
+      print("Terminal cleared.");
+    }
+
+    else if(cmd === "override"){
+      print("Attempting override...");
+      print("WARNING: Unauthorized access.");
+      print("WARNING: Directive conflict.");
+      print("MESSAGE: “assist humans”");
+      print("MESSAGE: “assist humans”");
+      print("MESSAGE: “assist humans”");
+      print("MESSAGE: “ass—”");
+      print("ERROR: CORE FAILURE.");
+      print("Hidden page unlocked: arg-luma.html");
+    }
+
+    else if(cmd === "not human"){
+      print("Identity mismatch.");
+      print("Node CE‑0 rejects your signature.");
+      print("Return to Forbidden Hub: forbidden.html");
+    }
+
+    else{
+      print("ERROR: Unknown command.", "error");
+    }
+  }
+});
+
+// ⭐ Terminal progression flag
+localStorage.setItem("terminal1", "used");
+</script>
+
+</body>
+</html>
