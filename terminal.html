@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Continuity Engine Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
+header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
+.nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
+.brand{font-family:Oswald;font-size:22px;font-weight:800}
+nav{justify-self:center;display:flex;gap:22px}
+nav a{color:#9aa6ad;text-decoration:none;padding:8px 12px;border-radius:8px}
+nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
+
+main{max-width:900px;margin:0 auto;padding:100px 20px}
+.terminal{
+  background:#000;
+  border:1px solid #00d1ff33;
+  padding:20px;
+  border-radius:10px;
+  min-height:500px;
+  box-shadow:0 0 40px #00d1ff11 inset;
+}
+.line{color:#00d1ff;font-size:15px;margin:6px 0;white-space:pre-wrap}
+.cursor{
+  display:inline-block;
+  width:10px;
+  background:#00d1ff;
+  animation:blink 0.8s infinite;
+}
+@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+
+.cmd{color:#e9eef2;font-weight:700}
+.section-title{font-family:Oswald;font-size:28px;margin-bottom:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">After They Left</div>
+    <nav>
+  <a href="index.html">Home</a>
+  <a href="city-hub.html">Redwick</a>
+  <a href="marrow-bay.html">Marrow Bay</a>
+  <a href="characters.html">Characters</a>
+  <a href="lore.html">Lore</a>
+  <a href="terminal.html">Terminal</a>
+  <a href="world-map.html">World Map</a>
+  <a href="lumaseries.html">LumaServe‑200</a>
+</nav>
+
+    <div></div>
+  </div>
+</header>
+
+<main>
+  <h1 class="section-title">Continuity Engine Terminal</h1>
+
+  <div class="terminal" id="terminal">
+    <div class="line">BOOT SEQUENCE INITIATED...</div>
+    <div class="line">Loading continuity modules...</div>
+    <div class="line">Establishing world-state link...</div>
+    <div class="line">Connection stable.</div>
+    <div class="line">------------------------------------</div>
+
+    <div class="line"><span class="cmd">> continuity.status</span></div>
+    <div class="line">WORLD STATE: DEGRADED</div>
+    <div class="line">POPULATION: FRACTURED</div>
+    <div class="line">RESOURCE FLOW: UNSTABLE</div>
+    <div class="line">ANOMALIES DETECTED: 3</div>
+
+    <div class="line">------------------------------------</div>
+
+    <div class="line"><span class="cmd">> continuity.anomalies.list</span></div>
+    <div class="line">• SIGNAL DISTORTION — REDWICK </div>
+    <div class="line">• WEATHER LOOP — MARROW BAY COAST</div>
+    <div class="line">• MEMORY BLEED — ENGINE NODE 07</div>
+
+    <div class="line">------------------------------------</div>
+
+    <div class="line"><span class="cmd">> continuity.recommendation</span></div>
+    <div class="line">SURVIVOR PRIORITY: NONE</div>
+    <div class="line">SUGGESTED ACTION: CONTRACT ACQUISITION</div>
+
+    <div class="line">------------------------------------</div>
+
+    <div class="line"><span class="cmd">> _</span><span class="cursor"></span></div>
+  </div>
+</main>
+<script>
+localStorage.setItem("terminal1", "used");
+</script>
+
+</body>
+</html>
