@@ -35,24 +35,24 @@
   /* ...typewriter code unchanged... */
 })();
 
-// ---------- Thumbnail loader (run after DOM is ready) ----------
+// ---------- Thumbnail loader ----------
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Initial thumbnail load
   document.querySelectorAll('.feature').forEach(feature => {
     const img = feature.getAttribute('data-img');
     const thumb = feature.querySelector('.feature-thumb');
+
     if (img && thumb) {
       thumb.style.backgroundImage = `url(${img})`;
       thumb.dataset.loaded = "true";
     }
   });
 
-  // MutationObserver for dynamically added features
   const observer = new MutationObserver(() => {
     document.querySelectorAll('.feature').forEach(feature => {
       const img = feature.getAttribute('data-img');
       const thumb = feature.querySelector('.feature-thumb');
+
       if (img && thumb && !thumb.dataset.loaded) {
         thumb.style.backgroundImage = `url(${img})`;
         thumb.dataset.loaded = "true";
@@ -60,6 +60,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // Hamburger Menu
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+
+  if(menuToggle && mobileNav){
+    menuToggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+    });
+  }
 
 }); // end DOMContentLoaded

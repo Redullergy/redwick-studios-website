@@ -254,6 +254,20 @@ main{
   border:1px solid rgba(255,255,255,0.05);
 }
 
+/* ===========================
+   TRAILER
+   =========================== */
+
+.trailer-box{
+  background:#0b0b0c;
+  border-radius:12px;
+  height:260px;
+  border:1px solid rgba(255,255,255,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
 
 /* ===========================
    MODAL
@@ -313,9 +327,72 @@ main{
     grid-template-columns:1fr;
   }
 }
+.menu-toggle{
+  display:none;
+}
+
+/* MOBILE MENU */
+@media screen and (max-width:768px){
+
+  .menu-toggle{
+    display:block;
+    background:transparent;
+    border:1px solid var(--accent);
+    color:var(--accent);
+    padding:10px 15px;
+    border-radius:8px;
+    margin:10px auto;
+    cursor:pointer;
+  }
+
+  .nav-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #mobileNav{
+    display:none;
+    flex-direction:column;
+    width:100%;
+    text-align:center;
+  }
+
+  #mobileNav.open{
+    display:flex;
+  }
+
+  #mobileNav a{
+    width:100%;
+    padding:12px;
+  }
+
+  .hero-title{
+    font-size:32px;
+  }
+
+  .hero-sub{
+    font-size:16px;
+  }
+}
 </style>
+
 </head>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+
+  if(menuToggle && mobileNav){
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+    });
+  }
+
+});
+</script>
 <body>
 
 <!-- ===========================
@@ -323,29 +400,24 @@ main{
      =========================== -->
 <header>
   <div class="nav-wrap">
-    <div class="brand">
- <div class="brand">After They Left</div>
 
-</div>
+    <div class="brand">After They Left</div>
 
- <nav>
-  <a href="index.html">Home</a>
-  <a href="city-hub.html">Redwick</a>
-  <a href="marrow-bay.html">Marrow Bay</a>
-  <a href="characters.html">Characters</a>
-  <a href="lore.html">Lore</a>
-  <a href="terminal.html">Terminal</a>
-  <a href="world-map.html">World Map</a>
-  <a href="lumaseries.html">LumaServe‑200</a>
-</nav>
+    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
 
+    <nav id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="city-hub.html">Redwick</a>
+      <a href="marrow-bay.html">Marrow Bay</a>
+      <a href="characters.html">Characters</a>
+      <a href="lore.html">Lore</a>
+      <a href="terminal.html">Terminal</a>
+      <a href="world-map.html">World Map</a>
+      <a href="lumaseries.html">LumaServe‑200</a>
+    </nav>
 
-
-
-    <div></div>
   </div>
 </header>
-
 <!-- ===========================
      HERO
      =========================== -->
@@ -521,35 +593,16 @@ They’re your main source of equipment and resources — everything you need be
 </section>
 
 <!-- ===========================
-     CREATED BY
+     TRAILER
      =========================== -->
-<section class="section" id="credits">
-  <h2 class="section-title">Created By</h2>
+<section class="section" id="trailer">
+  <h2 class="section-title">Trailer</h2>
 
-  <div class="chars">
-
-    <div class="char-card">
-      <strong>Redwick Studios</strong>
-      <p class="lead" style="font-size:14px;">
-        Independent game development studio and creator of
-        After They Left. Focused on immersive open-world
-        survival experiences, atmospheric storytelling,
-        and player-driven exploration.
-      </p>
-    </div>
-
-    <div class="char-card">
-      <strong>Cameron Younger</strong>
-      <p class="lead" style="font-size:14px;">
-	Graphic Designer and Branding Artist responsible for
-        the creation of the official Redwick Studios logo and
-        After They Left logo, helping establish the visual
-        identity of both the studio and the project.
-      </p>
-    </div>
-
+  <div class="trailer-box" id="trailer-box">
+    <span style="color:var(--muted); font-family:Roboto Mono;">TRAILER — CLICK</span>
   </div>
 </section>
+
 </main>
 
 <!-- ===========================
@@ -603,7 +656,30 @@ They’re your main source of equipment and resources — everything you need be
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
 
- 
+  // Trailer autoplay muted on scroll
+  const trailerBox = document.getElementById('trailer-box');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        modalMedia.innerHTML = '';
+        const v = document.createElement('video');
+        v.src = 'assets/trailer.mp4';
+        v.autoplay = true;
+        v.muted = true;
+        v.controls = true;
+        modalMedia.appendChild(v);
+
+        modalTitle.textContent = 'Official Trailer';
+        modalDesc.textContent = 'A cinematic look at Redwick, Marrow Bay, and the Continuity Engine.';
+        modal.classList.add('open');
+
+        observer.disconnect();
+      }
+    });
+  }, {threshold:0.6});
+
+  observer.observe(trailerBox);
+
 })();
 </script>
 <script src="script.js" defer></script>

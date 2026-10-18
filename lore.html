@@ -17,28 +17,91 @@ nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
 main{max-width:1200px;margin:0 auto;padding:100px 20px}
 .section-title{font-family:Oswald;font-size:32px;margin-bottom:10px}
 .lead{color:#9aa6ad;font-size:17px;max-width:900px}
+.menu-toggle{
+  display:none;
+}
+
+@media screen and (max-width:768px){
+
+  .menu-toggle{
+    display:block;
+    background:transparent;
+    border:1px solid #00d1ff;
+    color:#00d1ff;
+    padding:10px 15px;
+    border-radius:8px;
+    margin:10px auto;
+    cursor:pointer;
+}
+
+  .nav-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #mobileNav{
+    display:none;
+    flex-direction:column;
+    width:100%;
+    text-align:center;
+  }
+
+  #mobileNav.open{
+    display:flex !important;
+}
+
+  #mobileNav a{
+    width:100%;
+    padding:12px;
+  }
+
+  .section-title{
+    font-size:26px;
+  }
+
+  .lead{
+    font-size:15px;
+  }
+}
 </style>
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+
+  if(menuToggle && mobileNav){
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+    });
+  }
+
+});
+</script>
 <body>
 
 <header>
   <div class="nav-wrap">
+
     <div class="brand">After They Left</div>
-  <nav>
-  <a href="index.html">Home</a>
-  <a href="city-hub.html">Redwick</a>
-  <a href="marrow-bay.html">Marrow Bay</a>
-  <a href="characters.html">Characters</a>
-  <a href="lore.html">Lore</a>
-  <a href="terminal.html">Terminal</a>
-  <a href="world-map.html">World Map</a>
-  <a href="lumaseries.html">LumaServe‑200</a>
-</nav>
-    <div></div>
+
+    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+
+    <nav id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="city-hub.html">Redwick</a>
+      <a href="marrow-bay.html">Marrow Bay</a>
+      <a href="characters.html">Characters</a>
+      <a href="lore.html">Lore</a>
+      <a href="terminal.html">Terminal</a>
+      <a href="world-map.html">World Map</a>
+      <a href="lumaseries.html">LumaServe‑200</a>
+    </nav>
+
   </div>
 </header>
-
 <main>
   <h1 class="section-title">Lore — The Continuity Engine</h1>
 

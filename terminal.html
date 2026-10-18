@@ -35,16 +35,83 @@ main{max-width:900px;margin:0 auto;padding:100px 20px}
 
 .cmd{color:#e9eef2;font-weight:700}
 .section-title{font-family:Oswald;font-size:28px;margin-bottom:20px}
+.menu-toggle{
+  display:none;
+}
+
+@media screen and (max-width:768px){
+
+  .menu-toggle{
+    display:block;
+    background:transparent;
+    border:1px solid #00d1ff;
+    color:#00d1ff;
+    padding:10px 15px;
+    border-radius:8px;
+    margin:10px auto;
+    cursor:pointer;
+  }
+
+  .nav-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #mobileNav{
+    display:none;
+    flex-direction:column;
+    width:100%;
+    text-align:center;
+  }
+
+  #mobileNav.open{
+    display:flex !important;
+  }
+
+  #mobileNav a{
+    width:100%;
+    padding:12px;
+  }
+
+  .section-title{
+    font-size:26px;
+  }
+
+  .lead{
+    font-size:15px;
+  }
+
+  .img{
+    height:220px;
+  }
+}
 </style>
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+
+  if(menuToggle && mobileNav){
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+    });
+  }
+
+});
+</script>
 <body>
 
 <header>
   <div class="nav-wrap">
+
     <div class="brand">After They Left</div>
-    <nav>
-  <a href="index.html">Home</a>
+
+    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+
+    <nav id="mobileNav">  <a href="index.html">Home</a>
   <a href="city-hub.html">Redwick</a>
   <a href="marrow-bay.html">Marrow Bay</a>
   <a href="characters.html">Characters</a>
