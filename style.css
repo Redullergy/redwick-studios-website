@@ -1,0 +1,136 @@
+:root{
+  --bg:#0b0c0d;
+  --panel:#121416;
+  --muted:#9aa6ad;
+  --accent:#00d1ff; /* neon cyan */
+  --danger:#d06b4a;  /* rust */
+  --glass: rgba(255,255,255,0.03);
+  --hud: rgba(0,209,255,0.06);
+  --max-width:1200px;
+  --radius:10px;
+}
+
+/* small HUD lines and micro glow */
+.hero-title{
+  font-family: "Oswald", "Inter", system-ui, sans-serif;
+  letter-spacing: -1px;
+  color: #eafcff;
+  text-shadow: 0 6px 30px rgba(0,209,255,0.04);
+  font-weight:800;
+}
+
+/* subtle data overlay */
+.hero::before{
+  content: "CONTINUITY ONLINE";
+  position:absolute;
+  top:18px;
+  right:28px;
+  color:var(--hud);
+  font-size:12px;
+  letter-spacing:2px;
+  opacity:0.9;
+  z-index:22;
+  transform:translateY(-2px);
+}
+
+/* accent buttons */
+.btn{
+  background:linear-gradient(90deg,var(--accent), #00a8d9);
+  box-shadow:0 8px 30px rgba(0,209,255,0.06);
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+}
+
+/* feature cards: HUD border and microline */
+.feature{
+  display: block;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+
+  border-left:4px solid rgba(0,209,255,0.06);
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+}
+
+.feature-body {
+  padding-top: 12px;
+}
+
+.feature-thumb {
+  width: 100%;
+  height: 180px; /* or your size */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+}
+
+/* modal: colder panel */
+.modal-panel{
+  background:linear-gradient(180deg, rgba(10,11,12,0.98), rgba(6,7,8,0.98));
+  border:1px solid rgba(0,209,255,0.04);
+}
+
+/* small system label for feature descriptions */
+.feature-meta{ color:var(--muted); font-family: "Roboto Mono", monospace; font-size:12px; letter-spacing:0.6px; text-transform:uppercase; }
+
+/* danger accents for warnings */
+.warning{ color:var(--danger); font-weight:700; }
+/* Ensure thumbnails sit above overlays and are visible */
+.feature { position: relative; }
+.feature .feature-thumb {
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: normal !important;
+  background-blend-mode: normal !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+.feature::before,
+.feature::after { z-index: 0 !important; pointer-events: none !important; background: transparent !important; }
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+
+  header {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .nav-wrap {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+  }
+
+  .chars {
+    justify-content: center;
+  }
+
+  .char-card {
+    width: 100%;
+  }
+
+  .feature {
+    width: 100%;
+  }
+}
