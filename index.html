@@ -379,20 +379,6 @@ main{
 
 </head>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileNav = document.getElementById('mobileNav');
-
-  if(menuToggle && mobileNav){
-    menuToggle.addEventListener('click', function() {
-      mobileNav.classList.toggle('open');
-    });
-  }
-
-});
-</script>
 <body>
 
 <!-- ===========================
@@ -593,16 +579,35 @@ They’re your main source of equipment and resources — everything you need be
 </section>
 
 <!-- ===========================
-     TRAILER
+     CREATED BY
      =========================== -->
-<section class="section" id="trailer">
-  <h2 class="section-title">Trailer</h2>
+<section class="section" id="credits">
+  <h2 class="section-title">Created By</h2>
 
-  <div class="trailer-box" id="trailer-box">
-    <span style="color:var(--muted); font-family:Roboto Mono;">TRAILER — CLICK</span>
+  <div class="chars">
+
+    <div class="char-card">
+      <strong>Redwick Studios</strong>
+      <p class="lead" style="font-size:14px;">
+        Independent game development studio and creator of
+        After They Left. Focused on immersive open-world
+        survival experiences, atmospheric storytelling,
+        and player-driven exploration.
+      </p>
+    </div>
+
+    <div class="char-card">
+      <strong>Cameron Younger</strong>
+      <p class="lead" style="font-size:14px;">
+	Graphic Designer and Branding Artist responsible for
+        the creation of the official Redwick Studios logo and
+        After They Left logo, helping establish the visual
+        identity of both the studio and the project.
+      </p>
+    </div>
+
   </div>
 </section>
-
 </main>
 
 <!-- ===========================
@@ -656,29 +661,6 @@ They’re your main source of equipment and resources — everything you need be
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
 
-  // Trailer autoplay muted on scroll
-  const trailerBox = document.getElementById('trailer-box');
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        modalMedia.innerHTML = '';
-        const v = document.createElement('video');
-        v.src = 'assets/trailer.mp4';
-        v.autoplay = true;
-        v.muted = true;
-        v.controls = true;
-        modalMedia.appendChild(v);
-
-        modalTitle.textContent = 'Official Trailer';
-        modalDesc.textContent = 'A cinematic look at Redwick, Marrow Bay, and the Continuity Engine.';
-        modal.classList.add('open');
-
-        observer.disconnect();
-      }
-    });
-  }, {threshold:0.6});
-
-  observer.observe(trailerBox);
 
 })();
 </script>
