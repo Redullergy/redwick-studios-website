@@ -122,8 +122,30 @@
         display:flex !important;
     }
 
-    #mobileNav a{
-        padding:12px;
-        width:100%;
-    }
+    #mobileNav.open{
+    display:flex !important;
+}
+
+#mobileNav a{
+    display:block;
+    width:100%;
+    padding:12px;
+    color:#ffffff !important;
+    text-decoration:none;
+}
+#mobileNav{
+    background:#121416;
+    border:1px solid rgba(255,255,255,0.05);
+    border-radius:10px;
+}
+
+#mobileNav a,
+#mobileNav a:link,
+#mobileNav a:visited{
+    color:#ffffff !important;
+}
+
+}
+nav#mobileNav a{
+    color:#ffffff !important;
 }

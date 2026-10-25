@@ -356,17 +356,25 @@ main{
     flex-direction:column;
     width:100%;
     text-align:center;
-  }
+    background:#121416;
+    border-radius:10px;
+}
 
-  #mobileNav.open{
+#mobileNav.open{
     display:flex;
-  }
+}
 
-  #mobileNav a{
+#mobileNav a{
     width:100%;
     padding:12px;
-  }
+    display:block;
+    color:white !important;
+    text-decoration:none;
+}
 
+#mobileNav a:hover{
+    color:#00d1ff !important;
+}
   .hero-title{
     font-size:32px;
   }
@@ -375,6 +383,10 @@ main{
     font-size:16px;
   }
 }
+nav#mobileNav a {
+    color:red !important;
+}
+
 </style>
 
 </head>

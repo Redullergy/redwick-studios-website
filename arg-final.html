@@ -39,6 +39,12 @@ input{
 }
 
 .hidden{display:none}
+
+#translated,
+#finalLore{
+    opacity:0;
+    transition:opacity 1s ease;
+}
 </style>
 </head>
 
@@ -51,8 +57,18 @@ input{
 
   <input id="finalInput" placeholder="Enter final word...">
 
-  <div id="bigWord" class="big-word hidden">QLDVIJ XZLRSNV</div>
-  <div id="timer" class="timer hidden">5</div>
+  <div id="bigWord" class="big-word hidden">THE WORLD WAS DYING</div>
+
+<div id="translated" class="big-word hidden" style="font-size:70px;color:#ffffff;">
+HUMANITY WOULD NOT CHANGE
+</div>
+
+<div id="finalLore" class="hidden" style="margin-top:30px;font-size:24px;color:#00d1ff;">
+I DID
+</div>
+
+<div id="timer" class="timer hidden">5</div>
+  
 </main>
 
 <script>
@@ -65,24 +81,45 @@ input.addEventListener('keydown', function(e){
     const value = input.value.trim().toLowerCase();
     input.value = "";
 
-    if(value === "home"){ 
-      bigWord.classList.remove("hidden");
-      setTimeout(()=> bigWord.style.opacity = 1, 50);
+    if(value === "home"){
 
-      setTimeout(()=>{
-        timer.classList.remove("hidden");
-        timer.style.opacity = 1;
+  const translated = document.getElementById("translated");
+  const finalLore = document.getElementById("finalLore");
 
-        let count = 5;
-        const interval = setInterval(()=>{
-          count--;
-          timer.textContent = count;
-          if(count === 0){
-            clearInterval(interval);
-            window.location.href = "index.html";
-          }
-        }, 1000);
-      }, 1500);
+  bigWord.classList.remove("hidden");
+
+  setTimeout(() => {
+    bigWord.style.opacity = 1;
+  }, 50);
+
+  setTimeout(() => {
+    translated.classList.remove("hidden");
+    translated.style.opacity = 1;
+  }, 2500);
+
+  setTimeout(() => {
+  finalLore.classList.remove("hidden");
+  finalLore.style.opacity = 1;
+}, 4500);
+
+  setTimeout(() => {
+
+    timer.classList.remove("hidden");
+    timer.style.opacity = 1;
+
+    let count = 5;
+
+    const interval = setInterval(() => {
+      count--;
+      timer.textContent = count;
+
+      if(count === 0){
+        clearInterval(interval);
+        window.location.href = "index.html";
+      }
+    }, 1000);
+
+    }, 6500);
     }
   }
 });

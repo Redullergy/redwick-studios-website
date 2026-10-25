@@ -69,16 +69,25 @@ main{max-width:1200px;margin:0 auto;padding:100px 20px}
     flex-direction:column;
     width:100%;
     text-align:center;
-  }
+    background:#121416;
+    border-radius:10px;
+}
 
-  #mobileNav.open{
+#mobileNav.open{
     display:flex !important;
-  }
+}
 
-  #mobileNav a{
+#mobileNav a{
     width:100%;
     padding:12px;
-  }
+    display:block;
+    color:white !important;
+    text-decoration:none;
+}
+
+#mobileNav a:hover{
+    color:#00d1ff !important;
+}
 
   .section-title{
     font-size:26px;
@@ -92,6 +101,9 @@ main{max-width:1200px;margin:0 auto;padding:100px 20px}
     height:220px;
   }
 }
+
+nav#mobileNav a {
+    color:red !important;
 </style>
 </head>
 <script>
