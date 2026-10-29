@@ -10,7 +10,16 @@
 body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Inter,system-ui}
 header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
 .nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
-.brand{font-family:Oswald;font-size:22px;font-weight:800}
+.brand{
+  display:flex;
+  align-items:center;
+}
+
+.logo{
+  height:40px;
+  width:auto;
+  display:block;
+}
 nav{justify-self:center;display:flex;gap:22px}
 nav a{color:#9aa6ad;text-decoration:none;padding:8px 12px;border-radius:8px;font-family:Roboto Mono}
 nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
@@ -171,7 +180,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <header>
   <div class="nav-wrap">
 
-    <div class="brand">After They Left</div>
+    <div class="brand">
+    <a href="index.html">
+        <img src="assets/logo.png" alt="After They Left Logo" class="logo">
+    </a>
+</div>
 
     <button class="menu-toggle" id="menuToggle">☰ Menu</button>
 

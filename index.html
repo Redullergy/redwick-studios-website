@@ -60,12 +60,15 @@ header{
 }
 
 .brand{
-  font-family:Oswald, sans-serif;
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:1px;
+  display:flex;
+  align-items:center;
 }
 
+.logo{
+  height:40px;
+  width:auto;
+  display:block;
+}
 nav{
   justify-self:center;
   display:flex;
@@ -399,7 +402,11 @@ nav#mobileNav a {
 <header>
   <div class="nav-wrap">
 
-    <div class="brand">After They Left</div>
+    <div class="brand">
+    <a href="index.html">
+        <img src="assets/logo.png" alt="After They Left Logo" class="logo">
+    </a>
+</div>
 
     <button class="menu-toggle" id="menuToggle">☰ Menu</button>
 
