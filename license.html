@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lore — Continuity Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Inter,system-ui}
+header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
+.nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
+.brand{
+  display:flex;
+  align-items:center;
+}
+
+.logo{
+  height:40px;
+  width:auto;
+  display:block;
+}
+nav{justify-self:center;display:flex;gap:22px}
+nav a{color:#9aa6ad;text-decoration:none;font-family:Roboto Mono;padding:8px 12px;border-radius:8px}
+nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
+main{max-width:1200px;margin:0 auto;padding:100px 20px}
+.section-title{font-family:Oswald;font-size:32px;margin-bottom:10px}
+.lead{color:#9aa6ad;font-size:17px;max-width:900px}
+.menu-toggle{
+  display:none;
+}
+
+@media screen and (max-width:768px){
+
+  .menu-toggle{
+    display:block;
+    background:transparent;
+    border:1px solid #00d1ff;
+    color:#00d1ff;
+    padding:10px 15px;
+    border-radius:8px;
+    margin:10px auto;
+    cursor:pointer;
+}
+
+  .nav-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #mobileNav{
+    display:none;
+    flex-direction:column;
+    width:100%;
+    text-align:center;
+    background:#121416;
+    border-radius:10px;
+}
+
+#mobileNav.open{
+    display:flex !important;
+}
+
+#mobileNav a{
+    width:100%;
+    padding:12px;
+    display:block;
+    color:white !important;
+    text-decoration:none;
+}
+
+#mobileNav a:hover{
+    color:#00d1ff !important;
+}
+
+  .section-title{
+    font-size:26px;
+  }
+
+  .lead{
+    font-size:15px;
+  }
+}
+
+nav#mobileNav a {
+    color:red !important;
+}
+</style>
+</head>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+
+  if(menuToggle && mobileNav){
+    menuToggle.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+    });
+  }
+
+});
+</script>
+<body>
+
+<header>
+  <div class="nav-wrap">
+
+    <div class="brand">
+    <a href="index.html">
+        <img src="assets/logo.png" alt="After They Left Logo" class="logo">
+    </a>
+</div>
+
+    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+
+    <nav id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="city-hub.html">Redwick</a>
+      <a href="marrow-bay.html">Marrow Bay</a>
+      <a href="characters.html">Characters</a>
+      <a href="lore.html">Lore</a>
+      <a href="terminal.html">Terminal</a>
+      <a href="world-map.html">World Map</a>
+      <a href="lumaseries.html">LumaServe‑200</a>
+   <a href="license.html">Legal</a>
+ </nav>
+
+  </div>
+</header>
+<main>
+
+  <h1 class="section-title">Legal & Licensing</h1>
+
+  <p class="lead">
+    Redwick Studios™ is an independent game development studio and creator of
+    After They Left™. This page outlines copyright, licensing, downloads,
+    trademarks, and content usage relating to materials published through
+    Redwick Studios™ and its official channels.
+  </p>
+
+  <h2 class="section-title">Copyright</h2>
+
+  <p class="lead">
+    © 2026 Redwick Studios™. All Rights Reserved.
+  </p>
+
+  <p class="lead">
+    Unless otherwise stated, original lore, worldbuilding, written content,
+    website content, screenshots, renders, promotional artwork, branding,
+    logos, and creative materials published by Redwick Studios™ are protected
+    by copyright law.
+  </p>
+
+  <p class="lead">
+    No part of this website may be copied, reproduced, redistributed, or
+    commercially exploited without permission.
+  </p>
+
+  <h2 class="section-title">Third-Party Assets</h2>
+
+  <p class="lead">
+    Some screenshots, renders, videos, promotional images, and game content
+    may contain assets licensed from third-party creators and marketplaces,
+    including Fab and other content providers.
+  </p>
+
+  <p class="lead">
+    Ownership of such assets remains with their respective creators and rights
+    holders. Redwick Studios™ claims ownership only of its original creative
+    work, including story content, worldbuilding, visual composition,
+    branding, level design, promotional materials, and original assets
+    created by the studio.
+  </p>
+
+  <h2 class="section-title">Digital Downloads</h2>
+
+  <p class="lead">
+    Downloads provided through Redwick Studios™, Patreon, or official project
+    channels are intended for personal use only unless otherwise stated.
+  </p>
+
+  <p class="lead">
+    Users may not redistribute, resell, re-upload, commercially exploit, or
+    use downloadable content for AI training, machine learning systems, or
+    similar technologies without written permission.
+  </p>
+
+  <h2 class="section-title">Patreon Content</h2>
+
+  <p class="lead">
+    Access to Patreon-exclusive content does not transfer ownership of any
+    intellectual property rights. Downloads supplied through Patreon remain
+    subject to the same copyright and licensing terms outlined on this page.
+  </p>
+
+  <h2 class="section-title">Trademarks</h2>
+
+  <p class="lead">
+    Redwick Studios™ and After They Left™ are names used to identify the
+    studio and project. Unauthorised use intended to misrepresent ownership,
+    affiliation, or endorsement is prohibited.
+  </p>
+
+  <h2 class="section-title">Fan Content</h2>
+
+  <p class="lead">
+    Fans are welcome to share screenshots, gameplay clips, and discussions
+    relating to After They Left™ provided such use is non-commercial and
+    appropriate credit is given to Redwick Studios™.
+  </p>
+
+  <h2 class="section-title">Disclaimer</h2>
+
+  <p class="lead">
+    All content is provided "as is" without warranty of any kind. Features,
+    artwork, designs, screenshots, and game content may change during
+    development.
+  </p>
+
+  <p class="lead">
+    Redwick Studios™ accepts no liability for losses, damages, or issues
+    resulting from the use of this website, downloadable content, or
+    third-party services.
+  </p>
+
+  <h2 class="section-title">Contact</h2>
+
+  <p class="lead">
+    Official Website:<br>
+    www.redwickstudios.com
+  </p>
+
+</main></main>
+  </p>
+</main>
+
+<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
+
+<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+
+<p>
+Some media may incorporate third-party assets licensed from their respective creators.
+</p>
+
+<p>
+<a href="license.html" style="color:#00d1ff;text-decoration:none;">
+Legal & Licensing
+</a>
+</p>
+
+</footer>
+
+</body>
+</html>
+</body>
+</html>
