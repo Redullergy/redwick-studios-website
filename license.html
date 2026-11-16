@@ -2,120 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Lore — Continuity Engine</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="Copyright, licensing, downloads, trademarks and content usage for After They Left and Redwick Studios.">
+<meta name="theme-color" content="#0b0c0d">
+<title>Legal &amp; Licensing — After They Left</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Inter,system-ui}
-header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
-.brand{
-  display:flex;
-  align-items:center;
+:root{--bg:#0b0c0d;--panel:#121416;--muted:#9aa6ad;--accent:#00d1ff;--hud:rgba(0,209,255,.22);--radius:10px;--gap:22px;--max-width:1200px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+html,body{overflow-x:hidden}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:#e9eef2;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),#7af0ff);z-index:1100;box-shadow:0 0 12px var(--accent)}
+
+/* HEADER */
+.atl-header{position:fixed;top:0;left:0;right:0;height:70px;z-index:1000;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.15));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+.atl-header.solid{background:rgba(11,12,13,.94);border-bottom-color:var(--hud)}
+.atl-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+.atl-brand{display:flex;align-items:center;flex:0 0 auto}
+.atl-brand img{height:40px;width:auto;display:block}
+#mobileNav{display:flex;gap:4px;flex-wrap:nowrap;align-items:center;justify-content:flex-end;margin:0}
+#mobileNav a{color:#ff2d2d;text-decoration:none;font:400 13px "Roboto Mono",monospace;letter-spacing:.4px;padding:8px 10px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s}
+#mobileNav a:hover,#mobileNav a[aria-current="page"]{color:#ff6b6b;background:rgba(255,45,45,.08);text-shadow:0 0 12px rgba(255,45,45,.5)}
+#menuToggle{display:none;background:transparent;border:1px solid var(--accent);color:var(--accent);padding:9px 14px;border-radius:8px;cursor:pointer;font:400 14px "Roboto Mono",monospace;margin:0}
+@media(max-width:1100px){#mobileNav a{padding:8px 7px;font-size:12px}}
+@media(max-width:900px){
+  .atl-header{height:auto;max-height:100vh;max-height:100dvh;overflow-y:auto}
+  .atl-wrap{flex-direction:column;justify-content:center;gap:8px;height:auto;padding:10px 14px}
+  #menuToggle{display:block}
+  #mobileNav{display:none;position:static;width:100%;flex-direction:column;align-items:stretch;gap:0;background:rgba(18,20,22,.98);border:1px solid var(--hud);border-radius:10px;padding:6px}
+  #mobileNav.open{display:flex}
+  #mobileNav a{display:block;text-align:center;padding:14px;font-size:15px;white-space:normal}
 }
+@media(max-width:480px){.atl-wrap{padding:8px 14px}.atl-brand img{height:34px}}
 
-.logo{
-  height:40px;
-  width:auto;
-  display:block;
+/* BANNER */
+.banner{position:relative;height:75vh;min-height:420px;overflow:hidden;display:grid;place-items:end start;background:radial-gradient(ellipse at 50% 30%,#10252c,#0b0c0d 70%)}
+.banner-img{position:absolute;inset:-8% 0 -8%;background:url('assets/redwick.jpg') center/cover no-repeat;filter:brightness(.6) saturate(.85);will-change:transform}
+.banner::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
+.banner::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 40%,var(--bg) 100%)}
+.banner-text{position:relative;z-index:5;padding:0 max(20px,calc((100vw - var(--max-width))/2 + 20px)) 48px}
+.eyebrow{font-family:"Roboto Mono",monospace;font-size:12px;letter-spacing:.35em;color:var(--accent);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.banner h1{font-family:Oswald,sans-serif;font-size:clamp(40px,8vw,92px);line-height:1;font-weight:800;margin:10px 0 0;color:#eafcff;text-shadow:0 0 40px rgba(0,209,255,.25)}
+
+/* MAIN */
+main{max-width:var(--max-width);margin:0 auto;padding:40px 20px 90px}
+.section{margin-bottom:80px}
+.section-title{font-family:Oswald,sans-serif;font-size:clamp(24px,3.5vw,32px);font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:14px}
+.section-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--hud),transparent)}
+.lead{color:var(--muted);max-width:900px;margin:0}
+.panel{white-space:pre-line;background:var(--panel);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);border-radius:var(--radius);padding:28px;max-width:none}
+.panel b{color:#eafcff}
+
+/* CAROUSEL */
+.carousel{position:relative;margin-top:24px}
+.track{display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:10px 4px 22px;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.track.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto;user-select:none}
+.dcard{flex:0 0 min(360px,82vw);scroll-snap-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.05));border:1px solid rgba(255,255,255,.05);border-left:4px solid var(--hud);border-radius:var(--radius);padding:24px;opacity:.55;transform:scale(.94);transition:transform .35s,opacity .35s,border-color .25s,box-shadow .25s}
+.dcard.active{opacity:1;transform:scale(1);border-left-color:var(--accent)}
+.dcard:hover{transform:translateY(-6px) scale(1);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.dnum{font-family:Oswald,sans-serif;font-size:56px;font-weight:800;color:rgba(0,209,255,.18);line-height:1}
+.dcard h3{font-family:Oswald,sans-serif;font-size:22px;margin:8px 0 10px}
+.dcard p{margin:0;color:var(--muted);font-size:15px}
+.arrow{position:absolute;top:42%;z-index:5;width:48px;height:48px;border-radius:50%;border:1px solid var(--accent);background:rgba(11,12,13,.85);color:var(--accent);font-size:22px;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(4px);transition:background .2s,color .2s,opacity .2s}
+.arrow:hover{background:var(--accent);color:#001419}
+.arrow:disabled{opacity:.25;pointer-events:none}
+.arrow.prev{left:-8px}.arrow.next{right:-8px}
+.c-bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:4px}
+.c-bar i{display:block;height:100%;width:25%;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:width .15s,margin .15s}
+
+/* ACTIVITIES */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{font-family:"Roboto Mono",monospace;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--hud);background:rgba(0,209,255,.05);padding:9px 16px;border-radius:999px;transition:background .2s,transform .2s}
+.chip:hover{background:rgba(0,209,255,.14);transform:translateY(-3px)}
+
+
+/* LEGAL */
+.banner.plain{height:34vh;min-height:260px}
+.legal-grid{display:grid;grid-template-columns:230px 1fr;gap:40px;align-items:start}
+.toc{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--hud);padding-left:4px}
+.toc a{color:var(--muted);text-decoration:none;font:400 13px "Roboto Mono",monospace;letter-spacing:.3px;padding:8px 12px;border-left:2px solid transparent;margin-left:-5px;transition:color .2s,border-color .2s,background .2s}
+.toc a:hover{color:#fff;background:rgba(255,255,255,.03)}
+.toc a.on{color:var(--accent);border-left-color:var(--accent);background:rgba(0,209,255,.05)}
+.doc-intro{font-size:18px;color:#c3ced4;max-width:820px;margin:0 0 40px;padding:22px 26px;background:var(--panel);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);border-radius:var(--radius)}
+.clause{margin-bottom:34px;padding:26px 28px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.05));border:1px solid rgba(255,255,255,.05);border-radius:var(--radius)}
+.clause .num{font-family:"Roboto Mono",monospace;font-size:12px;letter-spacing:.3em;color:var(--accent)}
+.clause h2{font-family:Oswald,sans-serif;font-size:clamp(22px,3vw,28px);margin:6px 0 14px}
+.clause p{margin:0 0 14px;color:#b7c3ca;max-width:820px}
+.clause p:last-child{margin-bottom:0}
+@media(max-width:900px){
+  .legal-grid{grid-template-columns:1fr;gap:20px}
+  .toc{position:static;flex-direction:row;overflow-x:auto;border-left:0;padding:0 0 8px;gap:8px;scrollbar-width:none}
+  .toc::-webkit-scrollbar{display:none}
+  .toc a{flex:0 0 auto;border:1px solid var(--hud);border-radius:999px;margin:0;padding:8px 14px}
+  .toc a.on{border-color:var(--accent)}
 }
-nav{justify-self:center;display:flex;gap:22px}
-nav a{color:#9aa6ad;text-decoration:none;font-family:Roboto Mono;padding:8px 12px;border-radius:8px}
-nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
-main{max-width:1200px;margin:0 auto;padding:100px 20px}
-.section-title{font-family:Oswald;font-size:32px;margin-bottom:10px}
-.lead{color:#9aa6ad;font-size:17px;max-width:900px}
-.menu-toggle{
-  display:none;
+@media(max-width:768px){.clause{padding:20px 18px}.doc-intro{padding:18px;font-size:16px}}
+
+.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){.banner{height:60vh;padding-top:120px}html{scroll-padding-top:120px}}
+@media(max-width:768px){
+  .arrow{display:none}
+  main{padding:30px 16px 70px}
+  .section{margin-bottom:56px}
+  .panel{padding:18px}
+  .banner-text{padding-bottom:32px}
 }
-
-@media screen and (max-width:768px){
-
-  .menu-toggle{
-    display:block;
-    background:transparent;
-    border:1px solid #00d1ff;
-    color:#00d1ff;
-    padding:10px 15px;
-    border-radius:8px;
-    margin:10px auto;
-    cursor:pointer;
-}
-
-  .nav-wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  #mobileNav{
-    display:none;
-    flex-direction:column;
-    width:100%;
-    text-align:center;
-    background:#121416;
-    border-radius:10px;
-}
-
-#mobileNav.open{
-    display:flex !important;
-}
-
-#mobileNav a{
-    width:100%;
-    padding:12px;
-    display:block;
-    color:white !important;
-    text-decoration:none;
-}
-
-#mobileNav a:hover{
-    color:#00d1ff !important;
-}
-
-  .section-title{
-    font-size:26px;
-  }
-
-  .lead{
-    font-size:15px;
-  }
-}
-
-nav#mobileNav a {
-    color:red !important;
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
 </style>
 </head>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileNav = document.getElementById('mobileNav');
-
-  if(menuToggle && mobileNav){
-    menuToggle.addEventListener('click', function() {
-      mobileNav.classList.toggle('open');
-    });
-  }
-
-});
-</script>
 <body>
+<div id="progress"></div>
 
-<header>
-  <div class="nav-wrap">
-
-    <div class="brand">
-    <a href="index.html">
-        <img src="assets/logo.png" alt="After They Left Logo" class="logo">
-    </a>
-</div>
-
-    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
-
-    <nav id="mobileNav">
+<header id="siteHeader" class="atl-header" data-nav-ready="1">
+  <div class="atl-wrap">
+    <div class="atl-brand"><a href="index.html"><img src="assets/logo.png" alt="After They Left Logo"></a></div>
+    <button id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav">☰ Menu</button>
+    <nav id="mobileNav" aria-label="Main">
       <a href="index.html">Home</a>
       <a href="city-hub.html">Redwick</a>
       <a href="marrow-bay.html">Marrow Bay</a>
@@ -124,135 +136,107 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="terminal.html">Terminal</a>
       <a href="world-map.html">World Map</a>
       <a href="lumaseries.html">LumaServe‑200</a>
-   <a href="license.html">Legal</a>
- </nav>
-
+      <a href="license.html" aria-current="page">Legal</a>
+    </nav>
   </div>
 </header>
+
+<section class="banner plain">
+  <div class="banner-text">
+    <div class="eyebrow">Redwick Studios™ // Terms</div>
+    <h1>Legal &amp; Licensing</h1>
+  </div>
+</section>
+
 <main>
 
-  <h1 class="section-title">Legal & Licensing</h1>
+<div class="legal-grid">
+  <nav class="toc" id="toc" aria-label="On this page"><a href="#copyright">Copyright</a><a href="#third-party">Third-Party Assets</a><a href="#downloads">Digital Downloads</a><a href="#patreon">Patreon Content</a><a href="#trademarks">Trademarks</a><a href="#fan-content">Fan Content</a><a href="#disclaimer">Disclaimer</a><a href="#contact">Contact</a></nav>
+  <div>
+    <p class="doc-intro reveal">Redwick Studios™ is an independent game development studio and creator of After They Left™. This page outlines copyright, licensing, downloads, trademarks, and content usage relating to materials published through Redwick Studios™ and its official channels.</p>
+    <section class="clause reveal" id="copyright">
+      <div class="num">01</div>
+      <h2>Copyright</h2>
+      <p>© 2026 Redwick Studios™. All Rights Reserved.</p><p>Unless otherwise stated, original lore, worldbuilding, written content, website content, screenshots, renders, promotional artwork, branding, logos, and creative materials published by Redwick Studios™ are protected by copyright law.</p><p>No part of this website may be copied, reproduced, redistributed, or commercially exploited without permission.</p>
+    </section>
+    <section class="clause reveal" id="third-party">
+      <div class="num">02</div>
+      <h2>Third-Party Assets</h2>
+      <p>Some screenshots, renders, videos, promotional images, and game content may contain assets licensed from third-party creators and marketplaces, including Fab and other content providers.</p><p>Ownership of such assets remains with their respective creators and rights holders. Redwick Studios™ claims ownership only of its original creative work, including story content, worldbuilding, visual composition, branding, level design, promotional materials, and original assets created by the studio.</p>
+    </section>
+    <section class="clause reveal" id="downloads">
+      <div class="num">03</div>
+      <h2>Digital Downloads</h2>
+      <p>Downloads provided through Redwick Studios™, Patreon, or official project channels are intended for personal use only unless otherwise stated.</p><p>Users may not redistribute, resell, re-upload, commercially exploit, or use downloadable content for AI training, machine learning systems, or similar technologies without written permission.</p>
+    </section>
+    <section class="clause reveal" id="patreon">
+      <div class="num">04</div>
+      <h2>Patreon Content</h2>
+      <p>Access to Patreon-exclusive content does not transfer ownership of any intellectual property rights. Downloads supplied through Patreon remain subject to the same copyright and licensing terms outlined on this page.</p>
+    </section>
+    <section class="clause reveal" id="trademarks">
+      <div class="num">05</div>
+      <h2>Trademarks</h2>
+      <p>Redwick Studios™ and After They Left™ are names used to identify the studio and project. Unauthorised use intended to misrepresent ownership, affiliation, or endorsement is prohibited.</p>
+    </section>
+    <section class="clause reveal" id="fan-content">
+      <div class="num">06</div>
+      <h2>Fan Content</h2>
+      <p>Fans are welcome to share screenshots, gameplay clips, and discussions relating to After They Left™ provided such use is non-commercial and appropriate credit is given to Redwick Studios™.</p>
+    </section>
+    <section class="clause reveal" id="disclaimer">
+      <div class="num">07</div>
+      <h2>Disclaimer</h2>
+      <p>All content is provided "as is" without warranty of any kind. Features, artwork, designs, screenshots, and game content may change during development.</p><p>Redwick Studios™ accepts no liability for losses, damages, or issues resulting from the use of this website, downloadable content, or third-party services.</p>
+    </section>
+    <section class="clause reveal" id="contact">
+      <div class="num">08</div>
+      <h2>Contact</h2>
+      <p>Official Website:<br>www.redwickstudios.com</p>
+    </section>
+  </div>
+</div>
 
-  <p class="lead">
-    Redwick Studios™ is an independent game development studio and creator of
-    After They Left™. This page outlines copyright, licensing, downloads,
-    trademarks, and content usage relating to materials published through
-    Redwick Studios™ and its official channels.
-  </p>
-
-  <h2 class="section-title">Copyright</h2>
-
-  <p class="lead">
-    © 2026 Redwick Studios™. All Rights Reserved.
-  </p>
-
-  <p class="lead">
-    Unless otherwise stated, original lore, worldbuilding, written content,
-    website content, screenshots, renders, promotional artwork, branding,
-    logos, and creative materials published by Redwick Studios™ are protected
-    by copyright law.
-  </p>
-
-  <p class="lead">
-    No part of this website may be copied, reproduced, redistributed, or
-    commercially exploited without permission.
-  </p>
-
-  <h2 class="section-title">Third-Party Assets</h2>
-
-  <p class="lead">
-    Some screenshots, renders, videos, promotional images, and game content
-    may contain assets licensed from third-party creators and marketplaces,
-    including Fab and other content providers.
-  </p>
-
-  <p class="lead">
-    Ownership of such assets remains with their respective creators and rights
-    holders. Redwick Studios™ claims ownership only of its original creative
-    work, including story content, worldbuilding, visual composition,
-    branding, level design, promotional materials, and original assets
-    created by the studio.
-  </p>
-
-  <h2 class="section-title">Digital Downloads</h2>
-
-  <p class="lead">
-    Downloads provided through Redwick Studios™, Patreon, or official project
-    channels are intended for personal use only unless otherwise stated.
-  </p>
-
-  <p class="lead">
-    Users may not redistribute, resell, re-upload, commercially exploit, or
-    use downloadable content for AI training, machine learning systems, or
-    similar technologies without written permission.
-  </p>
-
-  <h2 class="section-title">Patreon Content</h2>
-
-  <p class="lead">
-    Access to Patreon-exclusive content does not transfer ownership of any
-    intellectual property rights. Downloads supplied through Patreon remain
-    subject to the same copyright and licensing terms outlined on this page.
-  </p>
-
-  <h2 class="section-title">Trademarks</h2>
-
-  <p class="lead">
-    Redwick Studios™ and After They Left™ are names used to identify the
-    studio and project. Unauthorised use intended to misrepresent ownership,
-    affiliation, or endorsement is prohibited.
-  </p>
-
-  <h2 class="section-title">Fan Content</h2>
-
-  <p class="lead">
-    Fans are welcome to share screenshots, gameplay clips, and discussions
-    relating to After They Left™ provided such use is non-commercial and
-    appropriate credit is given to Redwick Studios™.
-  </p>
-
-  <h2 class="section-title">Disclaimer</h2>
-
-  <p class="lead">
-    All content is provided "as is" without warranty of any kind. Features,
-    artwork, designs, screenshots, and game content may change during
-    development.
-  </p>
-
-  <p class="lead">
-    Redwick Studios™ accepts no liability for losses, damages, or issues
-    resulting from the use of this website, downloadable content, or
-    third-party services.
-  </p>
-
-  <h2 class="section-title">Contact</h2>
-
-  <p class="lead">
-    Official Website:<br>
-    www.redwickstudios.com
-  </p>
-
-</main></main>
-  </p>
 </main>
 
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:20px;">
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  const header=document.getElementById('siteHeader'), bar=document.getElementById('progress'), bimg=document.getElementById('bannerImg');
+
+  function onScroll(){
+    const h=document.documentElement, y=window.scrollY;
+    header.classList.toggle('solid',y>40);
+    bar.style.width=(y/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%';
+    if(bimg&&y<window.innerHeight)bimg.style.transform='translateY('+(y*.25)+'px)';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* hamburger menu */
+  const mBtn=document.getElementById('menuToggle'), mNav=document.getElementById('mobileNav');
+  function setMenu(o){mNav.classList.toggle('open',o);mBtn.setAttribute('aria-expanded',o);mBtn.textContent=o?'✕ Close':'☰ Menu';}
+  mBtn.addEventListener('click',e=>{e.stopImmediatePropagation();setMenu(!mNav.classList.contains('open'));});
+  mNav.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('click',e=>{if(!header.contains(e.target))setMenu(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+  window.addEventListener('resize',()=>{if(window.innerWidth>900)setMenu(false);});
+
+  /* table of contents highlight */
+  const links=[...document.querySelectorAll('#toc a')];
+  const spy=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));
+  }),{rootMargin:'-25% 0px -65% 0px'});
+  document.querySelectorAll('.clause').forEach(c=>spy.observe(c));
+})();
+</script>
 </body>
 </html>

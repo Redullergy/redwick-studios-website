@@ -2,148 +2,139 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#000000">
 <title>Final Sequence // CE‑07</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#000;color:#e9eef2;font-family:Roboto Mono, monospace;text-align:center}
-main{max-width:900px;margin:0 auto;padding:120px 20px}
+:root{--muted:#9aa6ad;--accent:#00d1ff;--rust:#d06b4a}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 40%,#08141a 0%,#000 70%);color:#e9eef2;font-family:"Roboto Mono",monospace;text-align:center}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.2;background:repeating-linear-gradient(0deg,rgba(0,0,0,.6) 0 1px,transparent 1px 3px)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+main{width:100%;max-width:900px;margin:0 auto;padding:60px 20px 40px;padding-top:calc(60px + env(safe-area-inset-top,0px));flex:1;display:flex;flex-direction:column;align-items:center}
+.back{align-self:flex-start;font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:40px;transition:color .2s,opacity 1s}
+.back:hover{color:var(--accent)}
+h1{font-family:Oswald,sans-serif;font-size:clamp(28px,6vw,52px);letter-spacing:.08em;margin:0 0 14px;animation:hflick 6s infinite}
+@keyframes hflick{0%,94%,100%{opacity:1}95%{opacity:.4}96%{opacity:1}98%{opacity:.6}}
+.gate p{color:var(--muted);margin:6px 0;font-size:15px}
+.gate{max-height:520px;transition:opacity 1.2s,transform 1.2s,max-height 1s ease 1s}
+main.running .gate,main.running .back{opacity:0;pointer-events:none}
+main.running .gate{transform:translateY(-14px);max-height:0;overflow:hidden}
+form{display:flex;gap:10px;justify-content:center;margin-top:26px;width:100%}
+input{flex:1;max-width:380px;min-width:0;background:#05090b;border:1px solid rgba(0,209,255,.4);padding:12px 14px;color:#e9eef2;font:700 16px "Roboto Mono",monospace;letter-spacing:.2em;text-transform:uppercase;border-radius:8px;caret-color:var(--accent)}
+input::placeholder{letter-spacing:.05em;text-transform:none;font-weight:400;color:#56707a}
+input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 20px rgba(0,209,255,.2)}
+button.go{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:0 18px;border-radius:8px;font:700 13px "Roboto Mono",monospace;letter-spacing:.2em;cursor:pointer;transition:background .2s,color .2s}
+button.go:hover{background:var(--accent);color:#001419}
+.msg{min-height:24px;margin-top:14px;color:#ff9a75;letter-spacing:.3em;font-size:13px;opacity:0;transition:opacity .3s}
+.msg.on{opacity:1}
+form.shake{animation:shk .45s steps(2,end)}
+@keyframes shk{0%{transform:translateX(-8px)}25%{transform:translateX(8px)}50%{transform:translateX(-6px)}75%{transform:translateX(6px)}100%{transform:none}}
 
-input{
-  width:100%;
-  max-width:400px;
-  background:#0b0c0d;
-  border:1px solid #00d1ff55;
-  padding:10px;
-  color:#e9eef2;
-  font-family:Roboto Mono;
-  border-radius:6px;
-  margin-top:20px;
-}
-
-.big-word{
-  font-size:120px;
-  font-weight:700;
-  color:#00d1ff;
-  opacity:0;
-  transition:opacity 1s ease;
-  margin-top:80px;
-}
-
-.timer{
-  font-size:40px;
-  margin-top:40px;
-  opacity:0;
-  transition:opacity 1s ease;
-}
-
+.stage{width:100%;margin-top:10px;display:flex;flex-direction:column;align-items:center}
+.big-word{font-family:Oswald,sans-serif;font-weight:800;font-size:clamp(34px,10vw,110px);line-height:1.05;color:var(--accent);opacity:0;transition:opacity 1.2s ease;margin-top:50px;text-shadow:0 0 40px rgba(0,209,255,.45);overflow-wrap:anywhere}
+#translated{font-size:clamp(24px,6.4vw,64px);color:#fff;text-shadow:0 0 30px rgba(255,255,255,.25)}
+#finalLore{font-family:Oswald,sans-serif;font-weight:800;font-size:clamp(36px,9vw,90px);letter-spacing:.2em;color:var(--rust);text-shadow:0 0 40px rgba(208,107,74,.6);opacity:0;transition:opacity 1.2s ease;margin-top:44px}
+#finalLore.on{opacity:1;animation:pound 1.6s ease 1}
+@keyframes pound{0%{transform:scale(1.35);filter:blur(6px)}30%{transform:scale(1);filter:none}}
+.timer{font:700 clamp(36px,8vw,56px) "Roboto Mono",monospace;margin-top:46px;opacity:0;transition:opacity 1.2s ease;color:var(--muted)}
 .hidden{display:none}
-
-#translated,
-#finalLore{
-    opacity:0;
-    transition:opacity 1s ease;
-}
+.on{opacity:1}
+.flash{position:fixed;inset:0;z-index:900;pointer-events:none;background:rgba(208,107,74,.2);opacity:0}
+.flash.on{animation:flk .9s steps(2,end)}
+@keyframes flk{0%{opacity:1}20%{opacity:0}40%{opacity:1}60%{opacity:.2}80%{opacity:.8}100%{opacity:0}}
+footer{padding:30px 20px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);font-size:13px}
+footer p{margin:6px 0}
+@media(prefers-reduced-motion:reduce){h1,#finalLore.on,form.shake,.flash.on{animation:none!important}}
 </style>
 </head>
-
 <body>
 
-<main>
-  <h1>FINAL INPUT REQUIRED</h1>
-  <p>Combine the clues from all three terminals.</p>
-  <p>Enter the final word to unlock the sequence.</p>
+<main id="main">
+  <a class="back" href="forbidden.html">← Forbidden Hub</a>
 
-  <input id="finalInput" placeholder="Enter final word...">
+  <div class="gate">
+    <h1>FINAL INPUT REQUIRED</h1>
+    <p>Combine the clues from all three terminals.</p>
+    <p>Enter the final word to unlock the sequence.</p>
 
-  <div id="bigWord" class="big-word hidden">THE WORLD WAS DYING</div>
+    <form id="form" autocomplete="off">
+      <input id="finalInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Final word" placeholder="Enter final word...">
+      <button class="go" type="submit">ENTER</button>
+    </form>
+    <div class="msg" id="msg" aria-live="assertive">INCORRECT</div>
+  </div>
 
-<div id="translated" class="big-word hidden" style="font-size:70px;color:#ffffff;">
-HUMANITY WOULD NOT CHANGE
-</div>
-
-<div id="finalLore" class="hidden" style="margin-top:30px;font-size:24px;color:#00d1ff;">
-I DID
-</div>
-
-<div id="timer" class="timer hidden">5</div>
-  
+  <div class="stage" aria-live="polite">
+    <div id="bigWord" class="big-word hidden">THE WORLD WAS DYING</div>
+    <div id="translated" class="big-word hidden">HUMANITY WOULD NOT CHANGE</div>
+    <div id="finalLore" class="hidden">I DID</div>
+    <div id="timer" class="timer hidden">5</div>
+  </div>
 </main>
 
-<script>
-const input = document.getElementById('finalInput');
-const bigWord = document.getElementById('bigWord');
-const timer = document.getElementById('timer');
+<div class="flash" id="flash"></div>
 
-input.addEventListener('keydown', function(e){
-  if(e.key === "Enter"){
-    const value = input.value.trim().toLowerCase();
-    input.value = "";
-
-    if(value === "home"){
-
-  const translated = document.getElementById("translated");
-  const finalLore = document.getElementById("finalLore");
-
-  bigWord.classList.remove("hidden");
-
-  setTimeout(() => {
-    bigWord.style.opacity = 1;
-  }, 50);
-
-  setTimeout(() => {
-    translated.classList.remove("hidden");
-    translated.style.opacity = 1;
-  }, 2500);
-
-  setTimeout(() => {
-  finalLore.classList.remove("hidden");
-  finalLore.style.opacity = 1;
-}, 4500);
-
-  setTimeout(() => {
-
-    timer.classList.remove("hidden");
-    timer.style.opacity = 1;
-
-    let count = 5;
-
-    const interval = setInterval(() => {
-      count--;
-      timer.textContent = count;
-
-      if(count === 0){
-        clearInterval(interval);
-        window.location.href = "index.html";
-      }
-    }, 1000);
-
-    }, 6500);
-    }
-  }
-});
-</script>
-  </p>
-</main>
-
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer>
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
+<script>
+const main=document.getElementById('main'), form=document.getElementById('form'), input=document.getElementById('finalInput'),
+      msg=document.getElementById('msg'), bigWord=document.getElementById('bigWord'),
+      translated=document.getElementById('translated'), finalLore=document.getElementById('finalLore'),
+      timer=document.getElementById('timer'), flashEl=document.getElementById('flash');
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let running=false, msgT=null;
+
+function show(el){
+  el.classList.remove('hidden');
+  void el.offsetWidth;            // let the fade-in play
+  el.classList.add('on');
+}
+function flash(){if(reduced)return;flashEl.classList.remove('on');void flashEl.offsetWidth;flashEl.classList.add('on');}
+
+function wrong(){
+  msg.classList.add('on');
+  form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+  clearTimeout(msgT); msgT=setTimeout(()=>msg.classList.remove('on'),1600);
+}
+
+function play(){
+  running=true; main.classList.add('running'); input.blur();
+
+  setTimeout(()=>show(bigWord),50);
+  setTimeout(()=>show(translated),2500);
+  setTimeout(()=>{show(finalLore);flash();},4500);
+  setTimeout(()=>{
+    show(timer);
+    let count=5;
+    const interval=setInterval(()=>{
+      count--;
+      timer.textContent=count;
+      if(count===0){
+        clearInterval(interval);
+        window.location.href="index.html";
+      }
+    },1000);
+  },6500);
+}
+
+form.addEventListener('submit',function(e){
+  e.preventDefault();
+  if(running)return;
+  const value=input.value.trim().toLowerCase();
+  input.value="";
+  if(!value)return;
+  if(value==="home") play(); else wrong();
+});
+if(window.matchMedia('(pointer:fine)').matches)input.focus();
+</script>
 </body>
 </html>

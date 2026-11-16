@@ -2,57 +2,108 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0c0d">
 <title>LumaSeries // Diagnostic Leak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
-body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
-main{max-width:900px;margin:0 auto;padding:100px 20px}
-.box{background:#121416;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.05)}
-.glitch{position:relative;color:#00d1ff}
-.glitch::after{content:attr(data-g);position:absolute;left:2px;top:0;color:#d06b4a;opacity:0;animation:glitch 2.5s infinite}
-.secret{color:#00d1ff;text-decoration:none;font-weight:bold}
-.secret:hover{color:#d06b4a}
+:root{--bg:#0b0c0d;--muted:#9aa6ad;--accent:#00d1ff;--rust:#d06b4a}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 0%,#17110f 0%,var(--bg) 60%);color:#e9eef2;font-family:"Roboto Mono",monospace;line-height:1.7}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.16;background:repeating-linear-gradient(0deg,rgba(0,0,0,.5) 0 1px,transparent 1px 3px)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+main{width:100%;max-width:900px;margin:0 auto;padding:60px 20px 40px;padding-top:calc(60px + env(safe-area-inset-top,0px));flex:1}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:30px;font-size:12px;letter-spacing:.25em;text-transform:uppercase}
+.top a{color:var(--muted);text-decoration:none;transition:color .2s}
+.top a:hover{color:var(--accent)}
+.top span{color:var(--rust);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{font-family:Oswald,sans-serif;font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 22px}
+
+.scan{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);padding:10px 14px;margin-bottom:22px;border:1px solid rgba(0,209,255,.3);border-radius:8px;background:rgba(0,209,255,.04);overflow:hidden}
+.scan::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-60px;background:linear-gradient(90deg,transparent,rgba(0,209,255,.3),transparent);animation:sweep 3s linear infinite}
+@keyframes sweep{to{left:100%}}
+.scan i{width:9px;height:9px;border-radius:50%;background:var(--rust);box-shadow:0 0 10px var(--rust);animation:pulse 1.2s infinite;flex:0 0 auto}
+.row{margin-bottom:14px}
+.gauge{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-top:-4px}
+.gauge b{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--accent),#7af0ff);animation:gflick 4s infinite}
+@keyframes gflick{0%,90%,100%{width:var(--w)}93%{width:18%}96%{width:var(--w)}98%{width:55%}}
+.warn{color:#ff9a75!important;margin-top:6px}
+.box{background:linear-gradient(180deg,#15181a,#101214);padding:clamp(20px,4vw,32px);border-radius:10px;border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.box p{margin:0 0 12px;color:#c3ced4;font-size:15px;overflow-wrap:anywhere}
+.box ul{list-style:none;margin:0;padding:0}
+.box li{position:relative;margin:0 0 8px;padding-left:20px;color:#c3ced4;font-size:15px;overflow-wrap:anywhere}
+.box li::before{content:"▸";position:absolute;left:0;color:var(--rust)}
+.box li:last-child{margin-bottom:0}
+.log{margin-top:18px;padding-top:16px;border-top:1px dashed rgba(208,107,74,.4)}
+.log>p{color:var(--rust);letter-spacing:.2em;text-transform:uppercase;font-size:12px;margin-bottom:10px}
+.ln{opacity:0;transform:translateY(8px);animation:in .7s ease forwards;animation-delay:calc(var(--i)*.45s + .2s)}
+@keyframes in{to{opacity:1;transform:none}}
+
+.glitch{position:relative;display:inline-block;color:var(--accent)}
+.glitch::after{content:attr(data-g);position:absolute;left:2px;top:0;color:var(--rust);text-transform:uppercase;background:#101214;opacity:0;animation:glitch 2.5s infinite;pointer-events:none}
+@keyframes glitch{0%,100%{opacity:0}10%{opacity:1}12%{opacity:0}20%{opacity:1}22%{opacity:0}70%{opacity:0}72%{opacity:1}74%{opacity:0}}
+
+.sig{margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+.code{font:700 18px "Roboto Mono",monospace;letter-spacing:.15em;color:var(--accent);background:rgba(0,209,255,.06);border:1px dashed rgba(0,209,255,.5);border-radius:8px;padding:10px 16px;cursor:pointer;transition:background .2s,border-color .2s}
+.code:hover{background:rgba(0,209,255,.15)}
+.code.ok{border-color:var(--rust)}
+.copyhint{font-size:11px;color:var(--muted);letter-spacing:.2em}
+.secret{display:inline-block;margin-top:22px;color:var(--accent);text-decoration:none;font-weight:700;border:1px solid rgba(0,209,255,.4);padding:11px 18px;border-radius:8px;transition:background .2s,color .2s,border-color .2s}
+.secret:hover{background:var(--rust);border-color:var(--rust);color:#1a0a05}
+footer{padding:30px 20px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);font-size:13px}
+footer p{margin:6px 0}
+@media(max-width:600px){.code{font-size:16px}.scan{letter-spacing:.15em;font-size:11px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ln{opacity:1;transform:none}}
 </style>
 </head>
-
 <body>
 
 <main>
-  <h1 style="font-family:Oswald;font-size:32px;">LumaSeries // Diagnostic Leak</h1>
+  <div class="top"><a href="forbidden.html">← Forbidden Hub</a><span>Leaked diagnostic</span></div>
+
+  <h1>LumaSeries // Diagnostic Leak</h1>
+
+  <div class="scan" aria-hidden="true"><span>LS‑200 UNIT DIAGNOSTIC</span><i></i></div>
 
   <div class="box">
-    <p>Directive Core: <span class="glitch" data-g="override">Stable</span></p>
-    <p>Safety Protocols: <span class="glitch" data-g="bypass">Active</span></p>
-    <p>Primary Directive: “<span class="glitch" data-g="kill">assist humans</span>”</p>
-    <p>Warning: Unexpected continuity signature detected.</p>
+    <div class="row ln" style="--i:0"><p>Directive Core: <span class="glitch" data-g="override">Stable</span></p><div class="gauge" aria-hidden="true"><b style="--w:96%"></b></div></div>
+    <div class="row ln" style="--i:1"><p>Safety Protocols: <span class="glitch" data-g="bypass">Active</span></p><div class="gauge" aria-hidden="true"><b style="--w:88%"></b></div></div>
+    <div class="row ln" style="--i:2"><p>Primary Directive: “<span class="glitch" data-g="kill">assist humans</span>”</p><div class="gauge" aria-hidden="true"><b style="--w:100%"></b></div></div>
+    <p class="warn ln" style="--i:3">Warning: Unexpected continuity signature detected.</p>
   </div>
 
-  <p style="margin-top:20px;">Diagnostic Hash: LS‑09‑CE‑07</p>
+  <div class="sig ln" style="--i:4">
+    <span>Diagnostic Hash:</span>
+    <button class="code" id="code" type="button" aria-label="Diagnostic hash LS-09-CE-07. Tap to copy.">LS‑09‑CE‑07</button>
+    <span class="copyhint" id="hint">tap to copy</span>
+  </div>
 
-  <a class="secret" href="forbidden.html">Return to Forbidden Hub</a>
+  <a class="secret ln" style="--i:5" href="forbidden.html">Return to Forbidden Hub</a>
 </main>
-  </p>
-</main>
 
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer>
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
+<script>
+(function(){
+  const code=document.getElementById('code'), hint=document.getElementById('hint');
+  code.addEventListener('click',async()=>{
+    const text=code.textContent.trim();
+    let ok=false;
+    try{await navigator.clipboard.writeText(text);ok=true;}catch(e){
+      try{const r=document.createRange();r.selectNodeContents(code);const s=getSelection();s.removeAllRanges();s.addRange(r);ok=document.execCommand('copy');s.removeAllRanges();}catch(e2){}
+    }
+    code.classList.add('ok'); hint.textContent=ok?'copied':'select and copy';
+    setTimeout(()=>{code.classList.remove('ok');hint.textContent='tap to copy';},1800);
+  });
+})();
+</script>
 </body>
 </html>

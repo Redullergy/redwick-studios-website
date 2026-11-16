@@ -2,190 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0c0d">
 <title>Continuity Engine // Terminal Failure</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
-main{max-width:900px;margin:0 auto;padding:100px 20px}
+:root{--bg:#0b0c0d;--muted:#9aa6ad;--accent:#00d1ff;--rust:#d06b4a}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 0%,#101a1d 0%,var(--bg) 60%);color:#e9eef2;font-family:"Roboto Mono",monospace;line-height:1.6}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+main{width:100%;max-width:900px;margin:0 auto;padding:60px 20px 30px;padding-top:calc(60px + env(safe-area-inset-top,0px));flex:1}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px;font-size:12px;letter-spacing:.25em;text-transform:uppercase}
+.top a{color:var(--muted);text-decoration:none;transition:color .2s}
+.top a:hover{color:var(--accent)}
+.top span{color:var(--rust);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{font-family:Oswald,sans-serif;font-size:clamp(24px,5vw,36px);line-height:1.15;margin:0 0 22px}
 
-.terminal{
-  background:#000;
-  padding:20px;
-  border-radius:10px;
-  border:1px solid #00d1ff33;
-  box-shadow:0 0 40px #00d1ff11 inset;
-  min-height:500px;
-  overflow-y:auto;
-}
+.term{position:relative;background:#000;border:1px solid rgba(0,209,255,.25);border-radius:12px;overflow:hidden;box-shadow:0 0 50px rgba(0,209,255,.08),0 20px 60px rgba(0,0,0,.6);transition:border-color .6s,box-shadow .6s}
+.term::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(0deg,rgba(0,209,255,.08) 0 1px,transparent 1px 3px)}
+.bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#0c1214;border-bottom:1px solid rgba(0,209,255,.18)}
+.bar i{width:11px;height:11px;border-radius:50%;background:#2a3a40}.bar i:first-child{background:var(--rust)}
+.bar span{margin-left:8px;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.screen{padding:20px;min-height:420px;max-height:62vh;overflow-y:auto}
+.screen::-webkit-scrollbar{width:8px}.screen::-webkit-scrollbar-thumb{background:rgba(0,209,255,.25);border-radius:4px}
+.line{margin:6px 0;white-space:pre-wrap;word-break:break-word;color:var(--accent);font-size:15px;text-shadow:0 0 8px rgba(0,209,255,.35);animation:lin .25s ease}
+@keyframes lin{from{opacity:0;transform:translateX(-6px)}}
+.line.cmd{color:#e9eef2;font-weight:700;text-shadow:none}
+.line.error{color:#ff9a75;text-shadow:0 0 8px rgba(208,107,74,.4)}
+.line.break{color:var(--rust);text-shadow:0 0 8px var(--rust)}
+.line.dead{color:#555;text-shadow:none}
+.prompt{display:flex;align-items:center;gap:10px;padding:0 20px 18px;position:relative;z-index:3}
+.prompt span{color:#e9eef2;font-weight:700}
+.prompt input{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid rgba(0,209,255,.25);color:#e9eef2;font:700 16px "Roboto Mono",monospace;padding:8px 2px;caret-color:var(--accent)}
+.prompt input:focus{outline:none;border-bottom-color:var(--accent)}
+.prompt input:disabled{opacity:.3}
+.cursor{display:inline-block;width:9px;height:1em;vertical-align:-2px;background:var(--accent);animation:blink .8s infinite}
+@keyframes blink{50%{opacity:0}}
 
-.line{margin:6px 0;white-space:pre-wrap;color:#00d1ff}
-.error{color:#d06b4a}
-.break{color:#d06b4a;text-shadow:0 0 6px #d06b4a}
-.dead{color:#444;text-shadow:none}
+/* the terminal degrades as integrity falls */
+.term[data-s="1"] .screen{animation:flick 5s infinite}
+.term[data-s="2"]{border-color:rgba(208,107,74,.5);box-shadow:0 0 50px rgba(208,107,74,.15),0 20px 60px rgba(0,0,0,.6)}
+.term[data-s="2"] .screen{animation:flick 2.5s infinite,jit 3s infinite}
+.term[data-s="3"]{border-color:var(--rust);box-shadow:0 0 70px rgba(208,107,74,.3),0 20px 60px rgba(0,0,0,.6)}
+.term[data-s="3"] .line{text-shadow:-2px 0 rgba(255,0,60,.55),2px 0 rgba(0,209,255,.55)}
+.term[data-s="3"] .screen{animation:flick 1.2s infinite,jit 1.5s infinite}
+.term[data-s="4"]{border-color:#222;box-shadow:none}
+.term[data-s="4"]::after{opacity:.05}
+@keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.5}95%{opacity:1}97%{opacity:.65}}
+@keyframes jit{0%,90%,100%{transform:none}91%{transform:translateX(-3px)}93%{transform:translateX(4px) skewX(2deg)}95%{transform:none}}
+.flash{position:fixed;inset:0;z-index:900;pointer-events:none;background:rgba(208,107,74,.16);opacity:0}
+.flash.on{animation:flk .8s steps(2,end)}
+@keyframes flk{0%{opacity:1}20%{opacity:0}40%{opacity:1}60%{opacity:.2}80%{opacity:.8}100%{opacity:0}}
 
-input{
-  width:100%;
-  background:#0b0c0d;
-  border:1px solid #00d1ff55;
-  padding:10px;
-  color:#e9eef2;
-  font-family:Roboto Mono;
-  border-radius:6px;
-  margin-top:20px;
-}
-
-.cursor{
-  display:inline-block;
-  width:10px;
-  background:#00d1ff;
-  animation:blink 0.8s infinite;
-}
-@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
-
-.secret-link{
-  color:#00d1ff;
-  text-decoration:none;
-  font-weight:bold;
-}
-.secret-link:hover{
-  color:#d06b4a;
-}
+.back{margin-top:28px;text-align:center}
+.secret-link{display:inline-block;color:var(--accent);text-decoration:none;font-weight:700;border:1px solid rgba(0,209,255,.4);padding:11px 18px;border-radius:8px;transition:background .2s,color .2s,border-color .2s}
+.secret-link:hover{background:var(--rust);border-color:var(--rust);color:#1a0a05}
+footer{padding:30px 20px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);font-size:13px}
+footer p{margin:6px 0}
+@media(max-width:768px){.screen{padding:14px;min-height:340px}.line{font-size:13px}.prompt{padding:0 14px 14px}.bar span{font-size:10px;letter-spacing:.12em}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
-
 <body>
 
 <main>
-  <h1 style="font-size:28px;">Continuity Engine // Terminal Failure</h1>
+  <div class="top"><a href="forbidden.html">← Restricted Node</a><span>Link unstable</span></div>
+  <h1>Continuity Engine // Terminal Failure</h1>
 
-  <div class="terminal" id="terminal">
-    <div class="line">BOOT SEQUENCE INITIATED...</div>
-    <div class="line">Loading continuity modules...</div>
-    <div class="line">Node CE‑0 link unstable.</div>
-    <div class="line">Awaiting input<span class="cursor"></span></div>
+  <div class="term" id="term" data-s="0">
+    <div class="bar"><i></i><i></i><i></i><span>CE‑0 // Unstable Link</span></div>
+    <div class="screen" id="terminal" aria-live="polite"></div>
+    <form class="prompt" id="form" autocomplete="off">
+      <span>&gt;</span>
+      <input id="input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Enter command" placeholder="Enter command...">
+    </form>
   </div>
 
-  <input id="input" placeholder="Enter command...">
-
-  <!-- ⭐ RETURN LINK ALWAYS VISIBLE ⭐ -->
-  <p style="margin-top:30px;text-align:center;">
-    <a class="secret-link" href="forbidden.html">Return to Restricted Node</a>
-  </p>
+  <p class="back"><a class="secret-link" href="forbidden.html">Return to Restricted Node</a></p>
 </main>
 
-<script>
-const terminal = document.getElementById('terminal');
-const input = document.getElementById('input');
+<div class="flash" id="flash"></div>
 
-let integrity = 100; // Terminal health
-
-function print(text, type="line"){
-  const div = document.createElement('div');
-  div.className = type;
-  div.textContent = text;
-  terminal.appendChild(div);
-  terminal.scrollTop = terminal.scrollHeight;
-}
-
-function degrade(){
-  integrity -= Math.floor(Math.random() * 15) + 5;
-
-  if(integrity < 70 && integrity > 40){
-    print("SYSTEM WARNING: Integrity falling.", "error");
-  }
-
-  if(integrity <= 40 && integrity > 10){
-    print("ERROR: Memory corruption spreading.", "break");
-    print("Memory shard detected: O");
-    print("CE‑0: Fragment secured. Continue your progress at the restricted node.");
-  }
-
-  if(integrity <= 10 && integrity > 0){
-    print("CRITICAL FAILURE: Directive conflict.", "break");
-  }
-
-  if(integrity <= 0){
-    terminal.innerHTML = "";
-    print("TERMINAL OFFLINE.", "dead");
-    print("CE‑0 CORE FAILURE.", "dead");
-    print("FINAL MESSAGE: assist humans", "dead");
-    input.disabled = true;
-  }
-}
-
-input.addEventListener('keydown', function(e){
-  if(e.key === "Enter"){
-    const cmd = input.value.trim().toLowerCase();
-    input.value = "";
-
-    if(integrity <= 0) return;
-
-    print("> " + cmd);
-
-    degrade();
-
-    if(integrity <= 0) return;
-
-    // COMMAND RESPONSES
-    if(cmd === "help"){
-      print("Commands: status, anomaly, node, clear");
-    }
-
-    else if(cmd === "status"){
-      print("WORLD STATE: DEGRADED");
-      print("NODE CE‑0: " + (integrity < 50 ? "CORRUPTED" : "UNSTABLE"));
-      print("PRIMARY DIRECTIVE: assist humans");
-    }
-
-    else if(cmd === "anomaly"){
-      print("ANOMALIES DETECTED: " + (integrity < 40 ? "UNKNOWN" : "4"));
-      print("• SIGNAL DISTORTION");
-      print("• MEMORY BLEED");
-      print("• WEATHER LOOP");
-      print("• ???");
-    }
-
-    else if(cmd === "node"){
-      print("Accessing CE‑0...");
-      print(integrity < 30 ? "ERROR: Node unreachable." : "Node fragment available.");
-    }
-
-    else if(cmd === "clear"){
-      terminal.innerHTML = "";
-      print("Terminal cleared.");
-    }
-
-    else{
-      print("ERROR: Unknown command.", "error");
-    }
-  }
-});
-
-// ⭐ Terminal progression flag
-localStorage.setItem("terminal2", "used");
-</script>
-  </p>
-</main>
-
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer>
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
+<script>
+const terminal=document.getElementById('terminal'), input=document.getElementById('input'),
+      form=document.getElementById('form'), term=document.getElementById('term'), flashEl=document.getElementById('flash');
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let integrity=100, shard=false, cursor=null; // Terminal health
+const hist=[]; let hi=0;
+
+function print(text,type="line"){
+  const div=document.createElement('div');
+  div.className='line'+(type!=='line'?' '+type:'');
+  div.textContent=text;
+  terminal.appendChild(div);
+  terminal.scrollTop=terminal.scrollHeight;
+  return div;
+}
+function setState(){
+  term.dataset.s = integrity<=0?4 : integrity<=10?3 : integrity<=40?2 : integrity<70?1 : 0;
+}
+function flash(){ if(reduced)return; flashEl.classList.remove('on'); void flashEl.offsetWidth; flashEl.classList.add('on'); }
+
+/* boot */
+print("BOOT SEQUENCE INITIATED...");
+print("Loading continuity modules...");
+print("Node CE‑0 link unstable.");
+cursor=document.createElement('span'); cursor.className='cursor';
+print("Awaiting input").appendChild(cursor);
+
+function degrade(){
+  integrity -= Math.floor(Math.random()*15)+5;
+
+  if(integrity<70 && integrity>40){
+    print("SYSTEM WARNING: Integrity falling.","error");
+  }
+  if(integrity<=40 && integrity>10){
+    print("ERROR: Memory corruption spreading.","break");
+    if(!shard){
+      shard=true; flash();
+      print("Memory shard detected: O");
+      print("CE‑0: Fragment secured. Continue your progress at the restricted node.");
+    }
+  }
+  if(integrity<=10 && integrity>0){
+    print("CRITICAL FAILURE: Directive conflict.","break");
+  }
+  if(integrity<=0){
+    terminal.innerHTML="";
+    print("TERMINAL OFFLINE.","dead");
+    print("CE‑0 CORE FAILURE.","dead");
+    print("FINAL MESSAGE: assist humans","dead");
+    input.disabled=true;
+    flash();
+  }
+  setState();
+}
+
+form.addEventListener('submit',function(e){
+  e.preventDefault();
+  const cmd=input.value.trim().toLowerCase();
+  input.value="";
+  if(!cmd||integrity<=0) return;
+  if(cursor){cursor.remove();cursor=null;}
+  hist.push(cmd); hi=hist.length;
+
+  print("> "+cmd,"cmd");
+  degrade();
+  if(integrity<=0) return;
+
+  // COMMAND RESPONSES
+  if(cmd==="help"){
+    print("Commands: status, anomaly, node, clear");
+  }
+  else if(cmd==="status"){
+    print("WORLD STATE: DEGRADED");
+    print("NODE CE‑0: "+(integrity<50?"CORRUPTED":"UNSTABLE"));
+    print("PRIMARY DIRECTIVE: assist humans");
+  }
+  else if(cmd==="anomaly"){
+    print("ANOMALIES DETECTED: "+(integrity<40?"UNKNOWN":"4"));
+    print("• SIGNAL DISTORTION");
+    print("• MEMORY BLEED");
+    print("• WEATHER LOOP");
+    print("• ???");
+  }
+  else if(cmd==="node"){
+    print("Accessing CE‑0...");
+    print(integrity<30?"ERROR: Node unreachable.":"Node fragment available.");
+  }
+  else if(cmd==="clear"){
+    terminal.innerHTML="";
+    print("Terminal cleared.");
+  }
+  else{
+    print("ERROR: Unknown command.","error");
+  }
+});
+input.addEventListener('keydown',function(e){
+  if(e.key==='ArrowUp'&&hist.length){e.preventDefault();hi=Math.max(0,hi-1);input.value=hist[hi]||'';}
+  if(e.key==='ArrowDown'&&hist.length){e.preventDefault();hi=Math.min(hist.length,hi+1);input.value=hist[hi]||'';}
+});
+if(window.matchMedia('(pointer:fine)').matches) input.focus();
+
+// ⭐ Terminal progression flag
+try{ localStorage.setItem("terminal2","used"); }catch(e){}
+</script>
 </body>
 </html>

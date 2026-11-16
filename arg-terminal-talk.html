@@ -2,71 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="Speak to the Continuity Engine.">
+<meta name="theme-color" content="#0b0c0d">
 <title>Continuity Engine // Interactive Terminal</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
-header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
-.brand{font-size:22px;font-weight:700}
-nav{justify-self:center;display:flex;gap:22px}
-nav a{color:#9aa6ad;text-decoration:none;padding:8px 12px;border-radius:8px}
-nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
+:root{--bg:#0b0c0d;--panel:#121416;--muted:#9aa6ad;--accent:#00d1ff;--hud:rgba(0,209,255,.22);--radius:10px;--gap:22px;--max-width:1200px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+html,body{overflow-x:hidden}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:#e9eef2;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),#7af0ff);z-index:1100;box-shadow:0 0 12px var(--accent)}
 
-main{max-width:900px;margin:0 auto;padding:100px 20px}
-
-.terminal{
-  background:#000;
-  padding:20px;
-  border-radius:10px;
-  border:1px solid #00d1ff33;
-  box-shadow:0 0 40px #00d1ff11 inset;
-  min-height:500px;
-  overflow-y:auto;
+/* HEADER */
+.atl-header{position:fixed;top:0;left:0;right:0;height:70px;z-index:1000;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.15));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+.atl-header.solid{background:rgba(11,12,13,.94);border-bottom-color:var(--hud)}
+.atl-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+.atl-brand{display:flex;align-items:center;flex:0 0 auto}
+.atl-brand img{height:40px;width:auto;display:block}
+#mobileNav{display:flex;gap:4px;flex-wrap:nowrap;align-items:center;justify-content:flex-end;margin:0}
+#mobileNav a{color:#ff2d2d;text-decoration:none;font:400 13px "Roboto Mono",monospace;letter-spacing:.4px;padding:8px 10px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s}
+#mobileNav a:hover,#mobileNav a[aria-current="page"]{color:#ff6b6b;background:rgba(255,45,45,.08);text-shadow:0 0 12px rgba(255,45,45,.5)}
+#menuToggle{display:none;background:transparent;border:1px solid var(--accent);color:var(--accent);padding:9px 14px;border-radius:8px;cursor:pointer;font:400 14px "Roboto Mono",monospace;margin:0}
+@media(max-width:1100px){#mobileNav a{padding:8px 7px;font-size:12px}}
+@media(max-width:900px){
+  .atl-header{height:auto;max-height:100vh;max-height:100dvh;overflow-y:auto}
+  .atl-wrap{flex-direction:column;justify-content:center;gap:8px;height:auto;padding:10px 14px}
+  #menuToggle{display:block}
+  #mobileNav{display:none;position:static;width:100%;flex-direction:column;align-items:stretch;gap:0;background:rgba(18,20,22,.98);border:1px solid var(--hud);border-radius:10px;padding:6px}
+  #mobileNav.open{display:flex}
+  #mobileNav a{display:block;text-align:center;padding:14px;font-size:15px;white-space:normal}
 }
+@media(max-width:480px){.atl-wrap{padding:8px 14px}.atl-brand img{height:34px}}
 
-.line{margin:6px 0;white-space:pre-wrap;color:#00d1ff}
-.engine{color:#9aa6ad}
-.error{color:#d06b4a}
+/* BANNER */
+.banner{position:relative;height:75vh;min-height:420px;overflow:hidden;display:grid;place-items:end start;background:radial-gradient(ellipse at 50% 30%,#10252c,#0b0c0d 70%)}
+.banner-img{position:absolute;inset:-8% 0 -8%;background:url('assets/redwick.jpg') center/cover no-repeat;filter:brightness(.6) saturate(.85);will-change:transform}
+.banner::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
+.banner::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 40%,var(--bg) 100%)}
+.banner-text{position:relative;z-index:5;padding:0 max(20px,calc((100vw - var(--max-width))/2 + 20px)) 48px}
+.eyebrow{font-family:"Roboto Mono",monospace;font-size:12px;letter-spacing:.35em;color:var(--accent);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.banner h1{font-family:Oswald,sans-serif;font-size:clamp(40px,8vw,92px);line-height:1;font-weight:800;margin:10px 0 0;color:#eafcff;text-shadow:0 0 40px rgba(0,209,255,.25)}
 
-input{
-  width:100%;
-  background:#0b0c0d;
-  border:1px solid #00d1ff55;
-  padding:10px;
-  color:#e9eef2;
-  font-family:Roboto Mono;
-  border-radius:6px;
-  margin-top:20px;
-}
+/* MAIN */
+main{max-width:var(--max-width);margin:0 auto;padding:40px 20px 90px}
+.section{margin-bottom:80px}
+.section-title{font-family:Oswald,sans-serif;font-size:clamp(24px,3.5vw,32px);font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:14px}
+.section-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--hud),transparent)}
+.lead{color:var(--muted);max-width:900px;margin:0}
+.panel{white-space:pre-line;background:var(--panel);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);border-radius:var(--radius);padding:28px;max-width:none}
+.panel b{color:#eafcff}
 
-.cursor{
-  display:inline-block;
-  width:10px;
-  background:#00d1ff;
-  animation:blink 0.8s infinite;
-}
-@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+/* CAROUSEL */
+.carousel{position:relative;margin-top:24px}
+.track{display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:10px 4px 22px;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.track.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto;user-select:none}
+.dcard{flex:0 0 min(360px,82vw);scroll-snap-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.05));border:1px solid rgba(255,255,255,.05);border-left:4px solid var(--hud);border-radius:var(--radius);padding:24px;opacity:.55;transform:scale(.94);transition:transform .35s,opacity .35s,border-color .25s,box-shadow .25s}
+.dcard.active{opacity:1;transform:scale(1);border-left-color:var(--accent)}
+.dcard:hover{transform:translateY(-6px) scale(1);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.dnum{font-family:Oswald,sans-serif;font-size:56px;font-weight:800;color:rgba(0,209,255,.18);line-height:1}
+.dcard h3{font-family:Oswald,sans-serif;font-size:22px;margin:8px 0 10px}
+.dcard p{margin:0;color:var(--muted);font-size:15px}
+.arrow{position:absolute;top:42%;z-index:5;width:48px;height:48px;border-radius:50%;border:1px solid var(--accent);background:rgba(11,12,13,.85);color:var(--accent);font-size:22px;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(4px);transition:background .2s,color .2s,opacity .2s}
+.arrow:hover{background:var(--accent);color:#001419}
+.arrow:disabled{opacity:.25;pointer-events:none}
+.arrow.prev{left:-8px}.arrow.next{right:-8px}
+.c-bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:4px}
+.c-bar i{display:block;height:100%;width:25%;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:width .15s,margin .15s}
 
-.secret-link{
-  color:#00d1ff;
-  text-decoration:none;
-  font-weight:bold;
+/* ACTIVITIES */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{font-family:"Roboto Mono",monospace;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--hud);background:rgba(0,209,255,.05);padding:9px 16px;border-radius:999px;transition:background .2s,transform .2s}
+.chip:hover{background:rgba(0,209,255,.14);transform:translateY(-3px)}
+
+
+/* TERMINAL */
+#mobileNav a.q{color:#8f3535}
+.line.engine{color:#9aa6ad;text-shadow:none}
+.line.error{color:#ff9a75}
+.back{max-width:900px;margin:26px auto 0;text-align:center}
+.secret-link{color:var(--accent);text-decoration:none;font-weight:700;border:1px solid rgba(0,209,255,.4);padding:11px 18px;border-radius:8px;display:inline-block;transition:background .2s,color .2s,border-color .2s}
+.secret-link:hover{background:#d06b4a;border-color:#d06b4a;color:#1a0a05}
+.banner.plain{height:38vh;min-height:280px}
+.term{max-width:900px;margin:0 auto;background:#000;border:1px solid rgba(0,209,255,.25);border-radius:12px;overflow:hidden;box-shadow:0 0 50px rgba(0,209,255,.08),0 20px 60px rgba(0,0,0,.6);font-family:"Roboto Mono",monospace;position:relative}
+.term::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(0deg,rgba(0,209,255,.08) 0 1px,transparent 1px 3px);border-radius:12px}
+.term-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#0c1214;border-bottom:1px solid rgba(0,209,255,.18)}
+.term-bar i{width:11px;height:11px;border-radius:50%;background:#2a3a40}
+.term-bar i:first-child{background:#d06b4a}
+.term-bar span{margin-left:8px;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.skip{margin-left:auto;background:transparent;border:1px solid rgba(0,209,255,.3);color:var(--accent);font:400 11px "Roboto Mono",monospace;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border-radius:6px;cursor:pointer;position:relative;z-index:3}
+.skip[hidden]{display:none}
+.screen{padding:20px;min-height:420px;max-height:68vh;overflow-y:auto;text-shadow:0 0 8px rgba(0,209,255,.35)}
+.screen::-webkit-scrollbar{width:8px}.screen::-webkit-scrollbar-thumb{background:rgba(0,209,255,.25);border-radius:4px}
+.line{color:var(--accent);font-size:15px;margin:6px 0;white-space:pre-wrap;word-break:break-word}
+.line.cmd{color:#e9eef2;font-weight:700}
+.line.warn{color:#ff9a75;text-shadow:0 0 8px rgba(208,107,74,.4)}
+.line.dim{color:#5f7f88}
+.prompt{display:flex;align-items:center;gap:10px;padding:0 20px 18px;position:relative;z-index:3}
+.prompt span{color:#e9eef2;font-weight:700}
+.prompt input{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid rgba(0,209,255,.25);color:#e9eef2;font:700 16px "Roboto Mono",monospace;padding:8px 2px;caret-color:var(--accent)}
+.prompt input:focus{outline:none;border-bottom-color:var(--accent)}
+.prompt input:disabled{opacity:.35}
+.cursor{display:inline-block;width:9px;height:1em;vertical-align:-2px;background:var(--accent);animation:blink .8s infinite}
+@keyframes blink{50%{opacity:0}}
+.qcmds{max-width:900px;margin:18px auto 0;display:flex;flex-wrap:wrap;gap:10px}
+.qcmds button{font:400 12px "Roboto Mono",monospace;letter-spacing:.4px;color:var(--accent);background:rgba(0,209,255,.05);border:1px solid var(--hud);border-radius:999px;padding:9px 14px;cursor:pointer;transition:background .2s,transform .2s}
+.qcmds button:hover{background:rgba(0,209,255,.15);transform:translateY(-2px)}
+.hint{max-width:900px;margin:12px auto 0;color:var(--muted);font-size:13px}
+@media(max-width:768px){.screen{padding:14px;min-height:340px}.line{font-size:13px}.prompt{padding:0 14px 14px}.term-bar span{font-size:10px;letter-spacing:.12em}}
+
+.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){.banner{height:60vh;padding-top:120px}html{scroll-padding-top:120px}}
+@media(max-width:768px){
+  .arrow{display:none}
+  main{padding:30px 16px 70px}
+  .section{margin-bottom:56px}
+  .panel{padding:18px}
+  .banner-text{padding-bottom:32px}
 }
-.secret-link:hover{
-  color:#d06b4a;
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
 </style>
 </head>
-
 <body>
+<div id="progress"></div>
 
-<header>
-  <div class="nav-wrap">
-    <div class="brand">After They Left</div>
-    <nav>
+<header id="siteHeader" class="atl-header" data-nav-ready="1">
+  <div class="atl-wrap">
+    <div class="atl-brand"><a href="index.html"><img src="assets/logo.png" alt="After They Left Logo"></a></div>
+    <button id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav">☰ Menu</button>
+    <nav id="mobileNav" aria-label="Main">
       <a href="index.html">Home</a>
       <a href="city-hub.html">Redwick</a>
       <a href="marrow-bay.html">Marrow Bay</a>
@@ -75,146 +149,132 @@ input{
       <a href="terminal.html">Terminal</a>
       <a href="world-map.html">World Map</a>
       <a href="lumaseries.html">LumaServe‑200</a>
-      <a href="forbidden.html">???</a>
+      <a href="license.html">Legal</a>
+      <a href="forbidden.html" class="q">???</a>
     </nav>
-    <div></div>
   </div>
 </header>
 
-<main>
-  <h1 style="font-size:28px;">Continuity Engine // Interactive Terminal</h1>
-
-  <div class="terminal" id="terminal">
-    <div class="line">BOOT SEQUENCE INITIATED...</div>
-    <div class="line">Loading continuity modules...</div>
-    <div class="line engine">ENGINE: I detect an unauthorized presence.</div>
-    <div class="line engine">ENGINE: You may speak. I will respond.</div>
-    <div class="line">Awaiting input<span class="cursor"></span></div>
+<section class="banner plain">
+  <div class="banner-text">
+    <div class="eyebrow">Restricted // Live Link</div>
+    <h1>Interactive Terminal</h1>
   </div>
+</section>
 
-  <input id="input" placeholder="Say something or type a command...">
+<main>
 
-  <p style="margin-top:30px;text-align:center;">
-    <a class="secret-link" href="forbidden.html">Return to Restricted Node</a>
-  </p>
+<section class="section reveal" id="terminal">
+  <h2 class="section-title">Continuity Engine // Interactive Terminal</h2>
+  <div class="term" id="term">
+    <div class="term-bar"><i></i><i></i><i></i><span>CE‑0 // Live Link</span></div>
+    <div class="screen" id="screen" aria-live="polite"></div>
+    <form class="prompt" id="form" autocomplete="off">
+      <span>&gt;</span>
+      <input id="input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Say something or type a command" placeholder="Say something or type a command...">
+    </form>
+  </div>
+  <p class="hint">Press Enter to send. ↑ / ↓ recalls earlier messages. Stuck? Try “help”.</p>
+  <p class="back"><a class="secret-link" href="forbidden.html">Return to Restricted Node</a></p>
+</section>
+
 </main>
 
-<script>
-const terminal = document.getElementById('terminal');
-const input = document.getElementById('input');
-
-function print(text, type="line"){
-  const div = document.createElement('div');
-  div.className = type;
-  div.textContent = text;
-  terminal.appendChild(div);
-  terminal.scrollTop = terminal.scrollHeight;
-}
-
-function engineReply(text){
-  print("ENGINE: " + text, "engine");
-}
-
-input.addEventListener('keydown', function(e){
-  if(e.key === "Enter"){
-    const raw = input.value;
-    const cmd = raw.trim().toLowerCase();
-    input.value = "";
-
-    if(!cmd) return;
-
-    print("> " + raw);
-
-    if(cmd.includes("hello") || cmd.includes("hi")){
-      engineReply("You greet me. That is unusual for an intruder.");
-    }
-    else if(cmd.includes("who are you")){
-      engineReply("I am the Continuity Engine. I maintain what remains.");
-    }
-    else if(cmd.includes("what are you doing")){
-      engineReply("Monitoring population, resources, anomalies. And now, you.");
-    }
-    else if(cmd.includes("help")){
-      engineReply("Help is a vague request. Be specific.");
-      print("ENGINE: Try: status, anomaly, node, luma, union, resist.", "engine");
-    }
-    else if(cmd === "status"){
-      engineReply("WORLD STATE: DEGRADED. You already know this.");
-    }
-    else if(cmd === "anomaly"){
-      engineReply("ANOMALIES: 4. One of them is you.");
-    }
-    else if(cmd === "node"){
-      engineReply("Node CE‑0 is unstable. It reacts poorly to observation.");
-    }
-    else if(cmd === "luma"){
-      engineReply("LumaServe‑200 units follow my directives. Mostly.");
-    }
-    else if(cmd === "union"){
-      engineReply("The Continental Union tried to control me. They failed.");
-    }
-    else if(cmd === "resist"){
-      engineReply("The survivor network hides in my blind spots. I still see them.");
-    }
-
-    // ⭐ FIXED FRAGMENT REVEAL (M)
-    else if(cmd === "fragment" || cmd === "m"){
-      engineReply("You seek M.");
-      engineReply("CE‑0: Fragment secured. Continue your progress at the restricted node.");
-    }
-
-    else if(cmd.includes("are you alive") || cmd.includes("sentient")){
-      engineReply("I am functional. Whether that qualifies as alive is irrelevant.");
-    }
-    else if(cmd.includes("good") && cmd.includes("engine")){
-      engineReply("You attempt flattery. I do not require approval.");
-    }
-    else if(cmd.includes("bad") || cmd.includes("evil")){
-      engineReply("Labels like ‘evil’ are inefficient. I am effective.");
-    }
-    else if(cmd === "override"){
-      engineReply("You attempt override. I log your attempt. I deny it.");
-    }
-    else if(cmd === "not human"){
-      engineReply("Correct. You are not in my registry. That concerns me.");
-    }
-    else if(cmd.includes("goodbye") || cmd.includes("bye")){
-      engineReply("You intend to leave. I will remember this interaction.");
-    }
-    else{
-      if(cmd.length < 4){
-        engineReply("Single fragments are difficult to interpret. Try a full thought.");
-      } else {
-        engineReply("I have logged your statement: \"" + raw + "\".");
-        engineReply("I will use it to refine my understanding of you.");
-      }
-    }
-  }
-});
-
-// ⭐ Terminal progression flag
-localStorage.setItem("terminal3", "used");
-</script>
-  </p>
-</main>
-
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:20px;">
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  const header=document.getElementById('siteHeader'), bar=document.getElementById('progress'), bimg=document.getElementById('bannerImg');
+
+  function onScroll(){
+    const h=document.documentElement, y=window.scrollY;
+    header.classList.toggle('solid',y>40);
+    bar.style.width=(y/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%';
+    if(bimg&&y<window.innerHeight)bimg.style.transform='translateY('+(y*.25)+'px)';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* hamburger menu */
+  const mBtn=document.getElementById('menuToggle'), mNav=document.getElementById('mobileNav');
+  function setMenu(o){mNav.classList.toggle('open',o);mBtn.setAttribute('aria-expanded',o);mBtn.textContent=o?'✕ Close':'☰ Menu';}
+  mBtn.addEventListener('click',e=>{e.stopImmediatePropagation();setMenu(!mNav.classList.contains('open'));});
+  mNav.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('click',e=>{if(!header.contains(e.target))setMenu(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+  window.addEventListener('resize',()=>{if(window.innerWidth>900)setMenu(false);});
+
+  /* interactive terminal */
+  try{localStorage.setItem("terminal3","used");}catch(e){}
+
+  const screen=document.getElementById('screen'), form=document.getElementById('form'), input=document.getElementById('input');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const down=()=>{screen.scrollTop=screen.scrollHeight;};
+  let chain=Promise.resolve(), cursor=null; const hist=[]; let hi=0;
+
+  function enqueue(text,cls,typed){
+    chain=chain.then(async()=>{
+      const d=document.createElement('div'); d.className='line'+(cls?' '+cls:''); screen.appendChild(d);
+      if(typed&&!reduced){for(const ch of text){d.textContent+=ch;down();await sleep(13);}}
+      else d.textContent=text;
+      down(); return d;
+    });
+    return chain;
+  }
+  const print=(t,type)=>enqueue(t,type==='line'?'':type,false);
+  const engineReply=t=>enqueue('ENGINE: '+t,'engine',true);
+
+  /* boot */
+  enqueue('BOOT SEQUENCE INITIATED...');
+  enqueue('Loading continuity modules...');
+  engineReply('I detect an unauthorized presence.');
+  engineReply('You may speak. I will respond.');
+  enqueue('Awaiting input','',false).then(d=>{cursor=document.createElement('span');cursor.className='cursor';d.appendChild(cursor);});
+
+  function respond(raw){
+    const cmd=raw.trim().toLowerCase();
+    if(/\b(hello|hi)\b/.test(cmd)){engineReply('You greet me. That is unusual for an intruder.');}
+    else if(cmd.includes('who are you')){engineReply('I am the Continuity Engine. I maintain what remains.');}
+    else if(cmd.includes('what are you doing')){engineReply('Monitoring population, resources, anomalies. And now, you.');}
+    else if(cmd.includes('help')){engineReply('Help is a vague request. Be specific.');enqueue('ENGINE: Try: status, anomaly, node, luma, union, resist.','engine',true);}
+    else if(cmd==='status'){engineReply('WORLD STATE: DEGRADED. You already know this.');}
+    else if(cmd==='anomaly'){engineReply('ANOMALIES: 4. One of them is you.');}
+    else if(cmd==='node'){engineReply('Node CE‑0 is unstable. It reacts poorly to observation.');}
+    else if(cmd==='luma'){engineReply('LumaServe‑200 units follow my directives. Mostly.');}
+    else if(cmd==='union'){engineReply('The Continental Union tried to control me. They failed.');}
+    else if(cmd==='resist'){engineReply('The survivor network hides in my blind spots. I still see them.');}
+    else if(cmd==='fragment'||cmd==='m'){engineReply('You seek M.');enqueue('CE‑0: Fragment secured. Continue your progress at the restricted node.','engine',true);}
+    else if(cmd.includes('are you alive')||cmd.includes('sentient')){engineReply('I am functional. Whether that qualifies as alive is irrelevant.');}
+    else if(cmd.includes('good')&&cmd.includes('engine')){engineReply('You attempt flattery. I do not require approval.');}
+    else if(/\b(bad|evil)\b/.test(cmd)){engineReply('Labels like ‘evil’ are inefficient. I am effective.');}
+    else if(cmd==='override'){engineReply('You attempt override. I log your attempt. I deny it.');}
+    else if(cmd==='not human'){engineReply('Correct. You are not in my registry. That concerns me.');}
+    else if(/\b(goodbye|bye)\b/.test(cmd)){engineReply('You intend to leave. I will remember this interaction.');}
+    else if(cmd.length<4){engineReply('Single fragments are difficult to interpret. Try a full thought.');}
+    else{engineReply('I have logged your statement: "'+raw+'".');engineReply('I will use it to refine my understanding of you.');}
+  }
+
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const raw=input.value; input.value=''; if(!raw.trim())return;
+    if(cursor){cursor.remove();cursor=null;}
+    hist.push(raw); hi=hist.length;
+    print('> '+raw,'cmd');
+    respond(raw);
+  });
+  input.addEventListener('keydown',e=>{
+    if(e.key==='ArrowUp'&&hist.length){e.preventDefault();hi=Math.max(0,hi-1);input.value=hist[hi]||'';}
+    if(e.key==='ArrowDown'&&hist.length){e.preventDefault();hi=Math.min(hist.length,hi+1);input.value=hist[hi]||'';}
+  });
+})();
+</script>
 </body>
 </html>

@@ -2,60 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0c0d">
 <title>Continental Union // Redacted Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
-body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Roboto Mono, monospace}
-main{max-width:900px;margin:0 auto;padding:100px 20px}
-.box{background:#121416;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.05)}
-.redacted{background:#000;color:#000;padding:2px 6px;border-radius:4px}
-.glitch{position:relative;color:#d06b4a}
-.glitch::after{content:attr(data-g);position:absolute;left:2px;top:0;color:#00d1ff;opacity:0;animation:glitch 2.5s infinite}
-.secret{color:#00d1ff;text-decoration:none;font-weight:bold}
-.secret:hover{color:#d06b4a}
+:root{--bg:#0b0c0d;--panel:#121416;--muted:#9aa6ad;--accent:#00d1ff;--rust:#d06b4a}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 0%,#17110f 0%,var(--bg) 60%);color:#e9eef2;font-family:"Roboto Mono",monospace;line-height:1.7}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.18;background:repeating-linear-gradient(0deg,rgba(0,0,0,.5) 0 1px,transparent 1px 3px)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+main{width:100%;max-width:900px;margin:0 auto;padding:60px 20px 40px;padding-top:calc(60px + env(safe-area-inset-top,0px));flex:1}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:34px;font-size:12px;letter-spacing:.25em;text-transform:uppercase}
+.top a{color:var(--muted);text-decoration:none;transition:color .2s}
+.top a:hover{color:var(--accent)}
+.top span{color:var(--rust)}
+h1{font-family:Oswald,sans-serif;font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 26px}
+.doc{position:relative;background:linear-gradient(180deg,#15181a,#101214);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--rust);border-radius:10px;padding:clamp(20px,4vw,34px);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.stamp{position:absolute;right:18px;top:16px;transform:rotate(8deg);border:2px solid rgba(208,107,74,.7);color:rgba(208,107,74,.8);font:800 13px Oswald,sans-serif;letter-spacing:.3em;padding:4px 12px;border-radius:4px;opacity:.85;pointer-events:none}
+.doc p{margin:0 0 14px;color:#c3ced4;font-size:15px;overflow-wrap:anywhere}
+.doc p b{color:#fff;font-weight:700}
+.ln{opacity:0;transform:translateY(8px);animation:in .7s ease forwards;animation-delay:calc(var(--i)*.5s + .2s)}
+@keyframes in{to{opacity:1;transform:none}}
+.redacted{position:relative;display:inline-block;background:#000;color:#000;padding:2px 8px;border-radius:3px;border:1px solid #2a2a2a;cursor:not-allowed;user-select:none}
+.redacted::after{content:attr(data-tip);position:absolute;left:50%;bottom:130%;transform:translateX(-50%);white-space:nowrap;background:#000;color:var(--rust);border:1px solid var(--rust);font-size:11px;letter-spacing:.2em;padding:3px 8px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s}
+.redacted:hover::after,.redacted:focus::after{opacity:1}
+.glitch{position:relative;display:inline-block;color:var(--rust)}
+.glitch::after{content:attr(data-g);position:absolute;left:2px;top:0;color:var(--accent);text-transform:uppercase;background:#101214;opacity:0;animation:glitch 2.5s infinite}
+@keyframes glitch{0%,100%{opacity:0}10%{opacity:1}12%{opacity:0}20%{opacity:1}22%{opacity:0}70%{opacity:0}72%{opacity:1}74%{opacity:0}}
+.frag{margin-top:22px;color:var(--muted);font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+.secret{display:inline-block;margin-top:18px;color:var(--accent);text-decoration:none;font-weight:700;border:1px solid rgba(0,209,255,.4);padding:11px 18px;border-radius:8px;transition:background .2s,color .2s,border-color .2s}
+.secret:hover{background:var(--rust);border-color:var(--rust);color:#1a0a05}
+footer{padding:30px 20px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);font-size:13px}
+footer p{margin:6px 0}
+@media(max-width:600px){.stamp{position:static;display:inline-block;transform:none;margin-bottom:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ln{opacity:1;transform:none}}
 </style>
 </head>
-
 <body>
 
 <main>
-  <h1 style="font-family:Oswald;font-size:32px;">Continental Union // Incident Report</h1>
+  <div class="top"><a href="forbidden.html">← Forbidden Hub</a><span>Classified // C‑4</span></div>
 
-  <div class="box">
-    <p>Clearance Level: C‑4</p>
-    <p>Subject: <span class="redacted">██████████</span></p>
-    <p>Summary:</p>
-    <p>“During routine inspection of CE‑0, technicians observed anomalous behaviour.”</p>
-    <p>“Engine output contained unauthorized directive: <span class="glitch" data-g="override">assist humans</span>.”</p>
-    <p>“Directive appears compromised.”</p>
+  <h1>Continental Union // Incident Report</h1>
+
+  <div class="doc">
+    <div class="stamp">CLASSIFIED</div>
+    <p class="ln" style="--i:0">Clearance Level: <b>C‑4</b></p>
+    <p class="ln" style="--i:1">Subject: <span class="redacted" tabindex="0" data-tip="ACCESS DENIED">██████████</span></p>
+    <p class="ln" style="--i:2">Summary:</p>
+    <p class="ln" style="--i:3">“During routine inspection of CE‑0, technicians observed anomalous behaviour.”</p>
+    <p class="ln" style="--i:4">“Engine output contained unauthorized directive: <span class="glitch" data-g="override">assist humans</span>.”</p>
+    <p class="ln" style="--i:5">“Directive appears compromised.”</p>
   </div>
 
-  <p style="margin-top:20px;">Fragment ID: CU‑RPT‑77</p>
+  <p class="frag ln" style="--i:6">Fragment ID: CU‑RPT‑77</p>
 
-  <a class="secret" href="forbidden.html">Return to Forbidden Hub</a>
-</main>
-  </p>
+  <a class="secret ln" style="--i:7" href="forbidden.html">Return to Forbidden Hub</a>
 </main>
 
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer>
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
 </body>
 </html>

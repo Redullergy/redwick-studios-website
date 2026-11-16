@@ -2,218 +2,287 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="Marrow Bay — a whole region frozen the moment everyone vanished. Survival island of After They Left.">
+<meta name="theme-color" content="#0b0c0d">
 <title>Marrow Bay — Survival Island</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#0b0c0d;color:#e9eef2;font-family:Inter,system-ui}
-header{position:fixed;top:0;left:0;right:0;height:70px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:1200px;margin:0 auto;padding:0 20px}
-.brand{
-  display:flex;
-  align-items:center;
+:root{--bg:#0b0c0d;--panel:#121416;--muted:#9aa6ad;--accent:#00d1ff;--hud:rgba(0,209,255,.22);--radius:10px;--gap:22px;--max-width:1200px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+html,body{overflow-x:hidden}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:#e9eef2;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),#7af0ff);z-index:1100;box-shadow:0 0 12px var(--accent)}
+
+/* HEADER */
+.atl-header{position:fixed;top:0;left:0;right:0;height:70px;z-index:1000;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.15));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+.atl-header.solid{background:rgba(11,12,13,.94);border-bottom-color:var(--hud)}
+.atl-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+.atl-brand{display:flex;align-items:center;flex:0 0 auto}
+.atl-brand img{height:40px;width:auto;display:block}
+#mobileNav{display:flex;gap:4px;flex-wrap:nowrap;align-items:center;justify-content:flex-end;margin:0}
+#mobileNav a{color:#ff2d2d;text-decoration:none;font:400 13px "Roboto Mono",monospace;letter-spacing:.4px;padding:8px 10px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s}
+#mobileNav a:hover,#mobileNav a[aria-current="page"]{color:#ff6b6b;background:rgba(255,45,45,.08);text-shadow:0 0 12px rgba(255,45,45,.5)}
+#menuToggle{display:none;background:transparent;border:1px solid var(--accent);color:var(--accent);padding:9px 14px;border-radius:8px;cursor:pointer;font:400 14px "Roboto Mono",monospace;margin:0}
+@media(max-width:1100px){#mobileNav a{padding:8px 7px;font-size:12px}}
+@media(max-width:900px){
+  .atl-header{height:auto;max-height:100vh;max-height:100dvh;overflow-y:auto}
+  .atl-wrap{flex-direction:column;justify-content:center;gap:8px;height:auto;padding:10px 14px}
+  #menuToggle{display:block}
+  #mobileNav{display:none;position:static;width:100%;flex-direction:column;align-items:stretch;gap:0;background:rgba(18,20,22,.98);border:1px solid var(--hud);border-radius:10px;padding:6px}
+  #mobileNav.open{display:flex}
+  #mobileNav a{display:block;text-align:center;padding:14px;font-size:15px;white-space:normal}
 }
+@media(max-width:480px){.atl-wrap{padding:8px 14px}.atl-brand img{height:34px}}
 
-.logo{
-  height:40px;
-  width:auto;
-  display:block;
+/* BANNER */
+.banner{position:relative;height:75vh;min-height:420px;overflow:hidden;display:grid;place-items:end start;background:radial-gradient(ellipse at 50% 30%,#10252c,#0b0c0d 70%)}
+.banner-img{position:absolute;inset:-8% 0 -8%;background:url('assets/marrow.jpg') center/cover no-repeat;filter:brightness(.6) saturate(.85);will-change:transform}
+.banner::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
+.banner::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 40%,var(--bg) 100%)}
+.banner-text{position:relative;z-index:5;padding:0 max(20px,calc((100vw - var(--max-width))/2 + 20px)) 48px}
+.eyebrow{font-family:"Roboto Mono",monospace;font-size:12px;letter-spacing:.35em;color:var(--accent);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.banner h1{font-family:Oswald,sans-serif;font-size:clamp(40px,8vw,92px);line-height:1;font-weight:800;margin:10px 0 0;color:#eafcff;text-shadow:0 0 40px rgba(0,209,255,.25)}
+
+/* MAIN */
+main{max-width:var(--max-width);margin:0 auto;padding:40px 20px 90px}
+.section{margin-bottom:80px}
+.section-title{font-family:Oswald,sans-serif;font-size:clamp(24px,3.5vw,32px);font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:14px}
+.section-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--hud),transparent)}
+.lead{color:var(--muted);max-width:900px;margin:0}
+.panel{white-space:pre-line;background:var(--panel);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);border-radius:var(--radius);padding:28px;max-width:none}
+.panel b{color:#eafcff}
+
+/* CAROUSEL */
+.carousel{position:relative;margin-top:24px}
+.track{display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:10px 4px 22px;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.track.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto;user-select:none}
+.dcard{flex:0 0 min(360px,82vw);scroll-snap-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.05));border:1px solid rgba(255,255,255,.05);border-left:4px solid var(--hud);border-radius:var(--radius);padding:24px;opacity:.55;transform:scale(.94);transition:transform .35s,opacity .35s,border-color .25s,box-shadow .25s}
+.dcard.active{opacity:1;transform:scale(1);border-left-color:var(--accent)}
+.dcard:hover{transform:translateY(-6px) scale(1);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.dnum{font-family:Oswald,sans-serif;font-size:56px;font-weight:800;color:rgba(0,209,255,.18);line-height:1}
+.dcard h3{font-family:Oswald,sans-serif;font-size:22px;margin:8px 0 10px}
+.dcard p{margin:0;color:var(--muted);font-size:15px}
+.arrow{position:absolute;top:42%;z-index:5;width:48px;height:48px;border-radius:50%;border:1px solid var(--accent);background:rgba(11,12,13,.85);color:var(--accent);font-size:22px;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(4px);transition:background .2s,color .2s,opacity .2s}
+.arrow:hover{background:var(--accent);color:#001419}
+.arrow:disabled{opacity:.25;pointer-events:none}
+.arrow.prev{left:-8px}.arrow.next{right:-8px}
+.c-bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:4px}
+.c-bar i{display:block;height:100%;width:25%;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:width .15s,margin .15s}
+
+/* ACTIVITIES */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{font-family:"Roboto Mono",monospace;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--hud);background:rgba(0,209,255,.05);padding:9px 16px;border-radius:999px;transition:background .2s,transform .2s}
+.chip:hover{background:rgba(0,209,255,.14);transform:translateY(-3px)}
+
+.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){.banner{height:60vh;padding-top:120px}html{scroll-padding-top:120px}}
+@media(max-width:768px){
+  .arrow{display:none}
+  main{padding:30px 16px 70px}
+  .section{margin-bottom:56px}
+  .panel{padding:18px}
+  .banner-text{padding-bottom:32px}
 }
-nav{justify-self:center;display:flex;gap:22px}
-nav a{color:#9aa6ad;text-decoration:none;font-family:Roboto Mono;padding:8px 12px;border-radius:8px}
-nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
-main{max-width:1200px;margin:0 auto;padding:100px 20px}
-.section-title{font-family:Oswald;font-size:32px;margin-bottom:10px}
-.lead{color:#9aa6ad;font-size:17px;max-width:900px}
-.img{width:100%;height:300px;background:#000;border-radius:10px;margin:20px 0}
-.menu-toggle{
-  display:none;
-}
-
-@media screen and (max-width:768px){
-
-  .menu-toggle{
-    display:block;
-    background:transparent;
-    border:1px solid #00d1ff;
-    color:#00d1ff;
-    padding:10px 15px;
-    border-radius:8px;
-    margin:10px auto;
-    cursor:pointer;
-  }
-
-  .nav-wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  #mobileNav{
-    display:none;
-    flex-direction:column;
-    width:100%;
-    text-align:center;
-    background:#121416;
-    border-radius:10px;
-}
-
-#mobileNav.open{
-    display:flex !important;
-}
-
-#mobileNav a{
-    width:100%;
-    padding:12px;
-    display:block;
-    color:white !important;
-    text-decoration:none;
-}
-
-#mobileNav a:hover{
-    color:#00d1ff !important;
-}
-
-  .section-title{
-    font-size:26px;
-  }
-
-  .lead{
-    font-size:15px;
-  }
-
-  .img{
-    height:220px;
-  }
-}
-
-nav#mobileNav a {
-    color:red !important;
-}
-
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
 </style>
 </head>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileNav = document.getElementById('mobileNav');
-
-  if(menuToggle && mobileNav){
-    menuToggle.addEventListener('click', function() {
-      mobileNav.classList.toggle('open');
-    });
-  }
-
-});
-</script>
 <body>
+<div id="progress"></div>
 
-<header>
-  <div class="nav-wrap">
-
-    <div class="brand">
-    <a href="index.html">
-        <img src="assets/logo.png" alt="After They Left Logo" class="logo">
-    </a>
-</div>
-
-    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
-
-    <nav id="mobileNav">  <a href="index.html">Home</a>
-  <a href="city-hub.html">Redwick</a>
-  <a href="marrow-bay.html">Marrow Bay</a>
-  <a href="characters.html">Characters</a>
-  <a href="lore.html">Lore</a>
-  <a href="terminal.html">Terminal</a>
-  <a href="world-map.html">World Map</a>
-  <a href="lumaseries.html">LumaServe‑200</a>
-<a href="license.html">Legal</a>
-</nav>
-
-
-    <div></div>
+<header id="siteHeader" class="atl-header" data-nav-ready="1">
+  <div class="atl-wrap">
+    <div class="atl-brand"><a href="index.html"><img src="assets/logo.png" alt="After They Left Logo"></a></div>
+    <button id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav">☰ Menu</button>
+    <nav id="mobileNav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="city-hub.html">Redwick</a>
+      <a href="marrow-bay.html" aria-current="page">Marrow Bay</a>
+      <a href="characters.html">Characters</a>
+      <a href="lore.html">Lore</a>
+      <a href="terminal.html">Terminal</a>
+      <a href="world-map.html">World Map</a>
+      <a href="lumaseries.html">LumaServe‑200</a>
+      <a href="license.html">Legal</a>
+    </nav>
   </div>
 </header>
 
+<section class="banner">
+  <div class="banner-img" id="bannerImg"></div>
+  <div class="banner-text">
+    <div class="eyebrow">Survival Island // Dome Sealed</div>
+    <h1>Marrow Bay</h1>
+  </div>
+</section>
+
 <main>
-  <h1 class="section-title">Marrow Bay — Survival Island</h1>
- 
-<div class="img" style="background:url('assets/marrow.jpg') center/cover no-repeat;"></div>
 
-  <p class="lead">
-    Marrow Bay sits sealed under a silent dome, a whole region frozen in the moment everyone vanished. In the centre stands the main city — tall buildings, streets, shops, and homes left exactly as they were. Just off it lies the Broken City, where structures collapsed mid‑day and the world cracked open without warning.
+<section class="section reveal" id="about">
+  <h2 class="section-title">Marrow Bay — Survival Island</h2>
+  <p class="lead panel">Marrow Bay sits sealed under a silent dome, a whole region frozen in the moment everyone vanished. In the centre stands the main city — tall buildings, streets, shops, and homes left exactly as they were. Just off it lies the Broken City, where structures collapsed mid‑day and the world cracked open without warning.
 
-Around the city, theres a massive park, a trailer park full of personal belongings, malls and shopping streets, a quarry, docks, lighthouses, outer villages, and thick forests. Every district is untouched, preserved, and waiting to be explored.
+Around the city, there’s a massive park, a trailer park full of personal belongings, malls and shopping streets, a quarry, docks, lighthouses, outer villages, and thick forests. Every district is untouched, preserved, and waiting to be explored.
 
 Marrow Bay was once a thriving coastal hub, a place built for families, workers, travellers, and trade. Now it’s a perfect snapshot of life before the fall — a whole world paused, silent, and full of clues.
 
 It’s the largest untouched dome left.
 It’s the biggest mystery in the Union’s history.
-And it’s where you go to uncover what happened to everyone who lived inside.
-  </p>
+And it’s where you go to uncover what happened to everyone who lived inside.</p>
+</section>
 
+<section class="section reveal" id="zones">
   <h2 class="section-title">Zones</h2>
-  <p class="lead">
-    <strong>Lots To Explore:</strong> Central City  
-The main city in the middle of Marrow Bay. Tall buildings, streets frozen in time, shops, homes, and key investigation points. This is the core of the silent dome.
+  <p class="lead">Lots to explore. Swipe or drag through all ten zones.</p>
+  <div class="carousel">
+    <button class="arrow prev" aria-label="Previous zone">‹</button>
+    <button class="arrow next" aria-label="Next zone">›</button>
+    <div class="track">
+      <article class="dcard">
+        <div class="dnum">01</div>
+        <h3>Central City</h3>
+        <p>The main city in the middle of Marrow Bay. Tall buildings, streets frozen in time, shops, homes, and key investigation points. This is the core of the silent dome.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">02</div>
+        <h3>Broken City</h3>
+        <p>Just off the main city — collapsed buildings, cracked roads, twisted metal, and unstable structures. High‑risk, high‑reward area for clues and keepsakes.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">03</div>
+        <h3>Grand Park</h3>
+        <p>A huge open park inside the dome. Overgrown paths, quiet lakes, old playgrounds, and scattered shelters. Calm but eerie.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">04</div>
+        <h3>Trailer Park</h3>
+        <p>Rows of abandoned trailers, small homes, and makeshift living spaces. Personal items everywhere, perfect for finding human clues.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">05</div>
+        <h3>Shopping District</h3>
+        <p>Shops, malls, food courts, and service buildings. Everything left mid‑day, mid‑task, mid‑life. A big area with lots to search.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">06</div>
+        <h3>Quarry Zone</h3>
+        <p>A massive quarry with machinery, rock pits, and loading areas. Echoes carry far, and the layout is easy to get lost in.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">07</div>
+        <h3>Docks</h3>
+        <p>Boats, warehouses, cargo areas, and water‑level walkways. Foggy, quiet, and full of abandoned equipment.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">08</div>
+        <h3>Lighthouses</h3>
+        <p>Tall coastal towers around the edges of the dome. Great for scanning signals and spotting routes deeper inside.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">09</div>
+        <h3>Outer Villages</h3>
+        <p>Small villages scattered around the bay. Homes, gardens, community buildings — all untouched since the day everyone vanished.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">10</div>
+        <h3>Forest Belt</h3>
+        <p>Thick forests surrounding parts of the dome. Dense, dark, and full of hidden paths, cabins, and forgotten spots.</p>
+      </article>
+    </div>
+    <div class="c-bar"><i></i></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Marrow Bay is packed with places to explore — every district feels different, every area tells part of the story.</p>
+</section>
 
-Broken City  
-Just off the main city — collapsed buildings, cracked roads, twisted metal, and unstable structures. High‑risk, high‑reward area for clues and keepsakes.
-
-Grand Park  
-A huge open park inside the dome. Overgrown paths, quiet lakes, old playgrounds, and scattered shelters. Calm but eerie.
-
-Trailer Park  
-Rows of abandoned trailers, small homes, and makeshift living spaces. Personal items everywhere, perfect for finding human clues.
-
-Shopping District  
-Shops, malls, food courts, and service buildings. Everything left mid‑day, mid‑task, mid‑life. A big area with lots to search.
-
-Quarry Zone  
-A massive quarry with machinery, rock pits, and loading areas. Echoes carry far, and the layout is easy to get lost in.
-
-Docks  
-Boats, warehouses, cargo areas, and water‑level walkways. Foggy, quiet, and full of abandoned equipment.
-
-Lighthouses  
-Tall coastal towers around the edges of the dome. Great for scanning signals and spotting routes deeper inside.
-
-Outer Villages  
-Small villages scattered around the bay. Homes, gardens, community buildings — all untouched since the day everyone vanished.
-
-Forest Belt  
-Thick forests surrounding parts of the dome. Dense, dark, and full of hidden paths, cabins, and forgotten spots.
-
-Marrow Bay is packed with places to explore — every district feels different, every area tells part of the story..  
-    
-
+<section class="section reveal" id="tasks">
   <h2 class="section-title">Survival Tasks</h2>
-  <p class="lead">
-    Marrow Bay is where you explore and investigate. Out here you search abandoned districts, collect clues, recover keepsakes, follow signals, and push deeper into dangerous zones. You build bases to stay out longer, track leads, and uncover what happened inside the silent dome.  
-  </p>
+  <p class="lead">Marrow Bay is where you explore and investigate. Out here you search abandoned districts, collect clues, recover keepsakes, follow signals, and push deeper into dangerous zones. You build bases to stay out longer, track leads, and uncover what happened inside the silent dome.</p>
+  <div class="chips">
+    <span class="chip">Search Districts</span><span class="chip">Collect Clues</span><span class="chip">Recover Keepsakes</span><span class="chip">Follow Signals</span><span class="chip">Build Bases</span><span class="chip">Track Leads</span>
+  </div>
+</section>
+
 </main>
-  </p>
-</main>
 
-<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px;">
-
-<p>© 2026 Redwick Studios™. All Rights Reserved.</p>
-
-<p>
-Some media may incorporate third-party assets licensed from their respective creators.
-</p>
-
-<p>
-<a href="license.html" style="color:#00d1ff;text-decoration:none;">
-Legal & Licensing
-</a>
-</p>
-
+<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:20px;">
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
 </footer>
 
-</body>
-</html>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  const header=document.getElementById('siteHeader'), bar=document.getElementById('progress'), bimg=document.getElementById('bannerImg');
+
+  function onScroll(){
+    const h=document.documentElement, y=window.scrollY;
+    header.classList.toggle('solid',y>40);
+    bar.style.width=(y/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%';
+    if(y<window.innerHeight)bimg.style.transform='translateY('+(y*.25)+'px)';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* hamburger menu */
+  const mBtn=document.getElementById('menuToggle'), mNav=document.getElementById('mobileNav');
+  function setMenu(o){mNav.classList.toggle('open',o);mBtn.setAttribute('aria-expanded',o);mBtn.textContent=o?'✕ Close':'☰ Menu';}
+  mBtn.addEventListener('click',e=>{e.stopImmediatePropagation();setMenu(!mNav.classList.contains('open'));});
+  mNav.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('click',e=>{if(!header.contains(e.target))setMenu(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+  window.addEventListener('resize',()=>{if(window.innerWidth>900)setMenu(false);});
+
+  /* carousels */
+  document.querySelectorAll('.carousel').forEach(root=>{
+    const track=root.querySelector('.track'), prev=root.querySelector('.prev'), next=root.querySelector('.next'), cbar=root.querySelector('.c-bar i');
+    const cards=[...track.children];
+    let moved=false, down=false, sx=0, sl=0;
+    const step=()=>cards[0].offsetWidth+22;
+    function update(){
+      const max=track.scrollWidth-track.clientWidth, p=max>0?track.scrollLeft/max:0;
+      prev.disabled=track.scrollLeft<4; next.disabled=track.scrollLeft>max-4;
+      const w=Math.max(15,track.clientWidth/track.scrollWidth*100);
+      cbar.style.width=w+'%'; cbar.style.marginLeft=(p*(100-w))+'%';
+      const mid=track.scrollLeft+track.clientWidth/2; let best=null,d=1e9;
+      cards.forEach(c=>{const x=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(x<d){d=x;best=c;}});
+      cards.forEach(c=>c.classList.toggle('active',max<=4||c===best));
+    }
+    track.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update); update();
+    prev.addEventListener('click',()=>track.scrollBy({left:-step()}));
+    next.addEventListener('click',()=>track.scrollBy({left:step()}));
+    track.addEventListener('mousedown',e=>{down=true;moved=false;sx=e.pageX;sl=track.scrollLeft;});
+    window.addEventListener('mousemove',e=>{
+      if(!down)return; const dx=e.pageX-sx;
+      if(Math.abs(dx)>6){moved=true;track.classList.add('dragging');}
+      if(moved)track.scrollLeft=sl-dx;
+    });
+    window.addEventListener('mouseup',()=>{
+      if(!down)return; down=false; track.classList.remove('dragging');
+      if(moved){const i=Math.round(track.scrollLeft/step());track.scrollTo({left:i*step()});}
+    });
+    track.addEventListener('dragstart',e=>e.preventDefault());
+    track.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false;}},true);
+    track.tabIndex=0;
+    track.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight')track.scrollBy({left:step()});
+      if(e.key==='ArrowLeft')track.scrollBy({left:-step()});
+    });
+  });
+})();
+</script>
 </body>
 </html>
