@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="After They Left Stories — standalone mini-games, short adventures and prologue experiences set in the world of After They Left.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="After They Left">
+<meta property="og:title" content="After They Left Stories">
+<meta property="og:description" content="After They Left Stories — standalone mini-games, short adventures and prologue experiences set in the world of After They Left.">
+<meta property="og:image" content="https://www.redwickstudios.com/assets/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="After They Left — open-world survival game by Redwick Studios">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="After They Left Stories">
+<meta name="twitter:description" content="After They Left Stories — standalone mini-games, short adventures and prologue experiences set in the world of After They Left.">
+<meta name="twitter:image" content="https://www.redwickstudios.com/assets/social-card.jpg">
+<meta name="theme-color" content="#0b0c0d">
+<title>Stories — After They Left</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c0d;--panel:#121416;--muted:#9aa6ad;--accent:#00d1ff;--hud:rgba(0,209,255,.22);--radius:10px;--gap:22px;--max-width:1200px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+html,body{overflow-x:hidden}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:#e9eef2;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),#7af0ff);z-index:1100;box-shadow:0 0 12px var(--accent)}
+
+/* HEADER */
+.atl-header{position:fixed;top:0;left:0;right:0;height:70px;z-index:1000;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.15));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+.atl-header.solid{background:rgba(11,12,13,.94);border-bottom-color:var(--hud)}
+.atl-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+.atl-brand{display:flex;align-items:center;flex:0 0 auto}
+.atl-brand img{height:40px;width:auto;display:block}
+#mobileNav{display:flex;gap:4px;flex-wrap:nowrap;align-items:center;justify-content:flex-end;margin:0}
+#mobileNav a{color:#ff2d2d;text-decoration:none;font:400 13px "Roboto Mono",monospace;letter-spacing:.4px;padding:8px 10px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s}
+#mobileNav a:hover,#mobileNav a[aria-current="page"]{color:#ff6b6b;background:rgba(255,45,45,.08);text-shadow:0 0 12px rgba(255,45,45,.5)}
+#menuToggle{display:none;background:transparent;border:1px solid var(--accent);color:var(--accent);padding:9px 14px;border-radius:8px;cursor:pointer;font:400 14px "Roboto Mono",monospace;margin:0}
+@media(max-width:1100px){#mobileNav a{padding:8px 7px;font-size:12px}}
+@media(max-width:1020px){
+  .atl-header{height:auto;max-height:100vh;max-height:100dvh;overflow-y:auto}
+  .atl-wrap{flex-direction:column;justify-content:center;gap:8px;height:auto;padding:10px 14px}
+  #menuToggle{display:block}
+  #mobileNav{display:none;position:static;width:100%;flex-direction:column;align-items:stretch;gap:0;background:rgba(18,20,22,.98);border:1px solid var(--hud);border-radius:10px;padding:6px}
+  #mobileNav.open{display:flex}
+  #mobileNav a{display:block;text-align:center;padding:14px;font-size:15px;white-space:normal}
+}
+@media(max-width:480px){.atl-wrap{padding:8px 14px}.atl-brand img{height:34px}}
+
+/* BANNER */
+.banner{position:relative;height:75vh;min-height:420px;overflow:hidden;display:grid;place-items:end start;background:radial-gradient(ellipse at 50% 30%,#10252c,#0b0c0d 70%)}
+.banner-img{position:absolute;inset:-8% 0 -8%;background:url('assets/redwick.jpg') center/cover no-repeat;filter:brightness(.6) saturate(.85);will-change:transform}
+.banner::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
+.banner::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 40%,var(--bg) 100%)}
+.banner-text{position:relative;z-index:5;padding:0 max(20px,calc((100vw - var(--max-width))/2 + 20px)) 48px}
+.eyebrow{font-family:"Roboto Mono",monospace;font-size:12px;letter-spacing:.35em;color:var(--accent);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.banner h1{font-family:Oswald,sans-serif;font-size:clamp(40px,8vw,92px);line-height:1;font-weight:800;margin:10px 0 0;color:#eafcff;text-shadow:0 0 40px rgba(0,209,255,.25)}
+
+/* MAIN */
+main{max-width:var(--max-width);margin:0 auto;padding:40px 20px 90px}
+.section{margin-bottom:80px}
+.section-title{font-family:Oswald,sans-serif;font-size:clamp(24px,3.5vw,32px);font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:14px}
+.section-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--hud),transparent)}
+.lead{color:var(--muted);max-width:900px;margin:0}
+.panel{white-space:pre-line;background:var(--panel);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);border-radius:var(--radius);padding:28px;max-width:none}
+.panel b{color:#eafcff}
+
+/* CAROUSEL */
+.carousel{position:relative;margin-top:24px}
+.track{display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:10px 4px 22px;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.track.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto;user-select:none}
+.dcard{flex:0 0 min(360px,82vw);scroll-snap-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.05));border:1px solid rgba(255,255,255,.05);border-left:4px solid var(--hud);border-radius:var(--radius);padding:24px;opacity:.55;transform:scale(.94);transition:transform .35s,opacity .35s,border-color .25s,box-shadow .25s}
+.dcard.active{opacity:1;transform:scale(1);border-left-color:var(--accent)}
+.dcard:hover{transform:translateY(-6px) scale(1);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.dnum{font-family:Oswald,sans-serif;font-size:56px;font-weight:800;color:rgba(0,209,255,.18);line-height:1}
+.dcard h3{font-family:Oswald,sans-serif;font-size:22px;margin:8px 0 10px}
+.dcard p{margin:0;color:var(--muted);font-size:15px}
+.arrow{position:absolute;top:42%;z-index:5;width:48px;height:48px;border-radius:50%;border:1px solid var(--accent);background:rgba(11,12,13,.85);color:var(--accent);font-size:22px;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(4px);transition:background .2s,color .2s,opacity .2s}
+.arrow:hover{background:var(--accent);color:#001419}
+.arrow:disabled{opacity:.25;pointer-events:none}
+.arrow.prev{left:-8px}.arrow.next{right:-8px}
+.c-bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:4px}
+.c-bar i{display:block;height:100%;width:25%;background:var(--accent);box-shadow:0 0 10px var(--accent);transition:width .15s,margin .15s}
+
+/* ACTIVITIES */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{font-family:"Roboto Mono",monospace;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--hud);background:rgba(0,209,255,.05);padding:9px 16px;border-radius:999px;transition:background .2s,transform .2s}
+.chip:hover{background:rgba(0,209,255,.14);transform:translateY(-3px)}
+
+
+/* STORIES */
+:root{--amber:#ffb347}
+.banner.plain{height:44vh;min-height:300px}
+.banner .sub{margin:14px 0 0;color:#b7c3ca;font-size:clamp(15px,2.2vw,20px);max-width:640px}
+.intro{white-space:pre-line;background:var(--panel);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--accent);border-radius:var(--radius);padding:26px 28px;max-width:none;font-size:clamp(15px,2vw,18px);color:#c3ced4}
+.fs{display:grid;grid-template-columns:1.05fr 1fr;border:1px solid var(--hud);border-radius:14px;overflow:hidden;background:var(--panel);box-shadow:0 20px 60px rgba(0,0,0,.55);margin-top:24px}
+.fs-img{position:relative;min-height:360px;background:url('assets/ruffl.jpg') center/cover no-repeat,linear-gradient(135deg,#10252c,#05090b)}
+.fs-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,var(--panel)),repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 1px,transparent 1px 3px)}
+.fs-img span{position:absolute;left:20px;bottom:18px;z-index:2;font:700 12px "Roboto Mono",monospace;letter-spacing:.3em;color:rgba(255,255,255,.55);text-transform:uppercase}
+.fs-body{padding:clamp(22px,4vw,38px);display:flex;flex-direction:column;gap:14px}
+.status{align-self:flex-start;display:inline-flex;align-items:center;gap:9px;font:700 12px "Roboto Mono",monospace;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,179,71,.4);background:rgba(255,179,71,.07);border-radius:999px;padding:6px 14px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:pulse 1.8s infinite}
+.fs-body h3{font-family:Oswald,sans-serif;font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0}
+.fs-body p{margin:0;color:var(--muted)}
+.fs-body h4{font:700 12px "Roboto Mono",monospace;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin:6px 0 0}
+.fs-body ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fs-body li{position:relative;padding-left:26px;color:#c3ced4}
+.fs-body li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+.learn{align-self:flex-start;margin:8px 0 0;border:0;cursor:pointer;background:linear-gradient(90deg,var(--accent),#00a8d9);color:#001419;padding:13px 28px;border-radius:10px;font:800 15px Inter,sans-serif;letter-spacing:.08em;transition:transform .2s,box-shadow .2s}
+.learn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,209,255,.35)}
+.more-note{min-height:22px;font:400 13px "Roboto Mono",monospace;color:var(--accent)}
+.dcard .tag{display:inline-block;margin-bottom:6px;font:400 11px "Roboto Mono",monospace;letter-spacing:.25em;text-transform:uppercase;color:var(--amber)}
+@media(max-width:800px){.fs{grid-template-columns:1fr}.fs-img{min-height:220px}.fs-img::after{background:linear-gradient(180deg,transparent 55%,var(--panel)),repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 1px,transparent 1px 3px)}}
+
+.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media(max-width:1020px){.banner{height:60vh;padding-top:120px}html{scroll-padding-top:120px}}
+@media(max-width:768px){
+  .arrow{display:none}
+  main{padding:30px 16px 70px}
+  .section{margin-bottom:56px}
+  .panel{padding:18px}
+  .banner-text{padding-bottom:32px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header id="siteHeader" class="atl-header" data-nav-ready="1">
+  <div class="atl-wrap">
+    <div class="atl-brand"><a href="index.html"><img src="assets/logo.png" alt="After They Left Logo"></a></div>
+    <button id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav">☰ Menu</button>
+    <nav id="mobileNav" aria-label="Main">
+      <a href="index.html">Home</a>
+<a href="stories.html" aria-current="page">Stories</a>
+      <a href="city-hub.html">Redwick</a>
+      <a href="marrow-bay.html">Marrow Bay</a>
+      <a href="characters.html">Characters</a>
+      <a href="lore.html">Lore</a>
+      <a href="terminal.html">Terminal</a>
+      <a href="world-map.html">World Map</a>
+      <a href="lumaseries.html">LumaServe‑200</a>
+      <a href="license.html">Legal</a>
+    </nav>
+  </div>
+</header>
+
+<section class="banner plain">
+  <div class="banner-text">
+    <div class="eyebrow">Standalone Experiences</div>
+    <h1>After They Left Stories</h1>
+    <p class="sub">Explore the world before the full game releases.</p>
+  </div>
+</section>
+
+<main>
+
+<section class="section reveal" id="about">
+  <p class="lead intro">After They Left Stories is a collection of standalone mini-games, short adventures, and prologue experiences set within the world of After They Left. Each story focuses on different survivors, locations, and events across the Continuity Engine timeline.</p>
+</section>
+
+<section class="section reveal" id="featured">
+  <h2 class="section-title">Featured Story</h2>
+  <article class="fs">
+    <div class="fs-img" role="img" aria-label="Artwork for Ruffl’s Story"><span>Story 01</span></div>
+    <div class="fs-body">
+      <div class="status">Status: In Development</div>
+      <h3>Ruffl’s Story</h3>
+      <p>The world hasn't ended yet. The cities still breathe, people still live their lives, and the Continuity Engine continues its work. But something is changing. Follow Ruffl through Day Zero as the first cracks appear in the foundations of a world on the brink of transformation..</p>
+      <h4>Features</h4>
+      <ul>
+        <li>Original story</li>
+        <li>New characters</li>
+        <li>Standalone experience</li>
+        <li>Expands the After They Left universe</li>
+      </ul>
+      <button class="btn learn" id="learn" type="button">Learn More</button>
+      <div class="more-note" id="moreNote" role="status" aria-live="polite"></div>
+    </div>
+  </article>
+</section>
+
+<section class="section reveal" id="future">
+  <h2 class="section-title">Future Stories</h2>
+  <div class="carousel">
+    <button class="arrow prev" aria-label="Previous story">‹</button>
+    <button class="arrow next" aria-label="Next story">›</button>
+    <div class="track">
+      <article class="dcard">
+        <div class="dnum">01</div>
+        <span class="tag">Future story</span>
+        <h3>The Fisherman</h3>
+        <p>Discover strange signals coming from the waters around Marrow Bay.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">02</div>
+        <span class="tag">Future story</span>
+        <h3>The Last Broadcast</h3>
+        <p>Uncover the final transmission sent before humanity vanished.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">03</div>
+        <span class="tag">Future story</span>
+        <h3>The Engineer</h3>
+        <p>Investigate a failed Continuity Engine maintenance facility.</p>
+      </article>
+      <article class="dcard">
+        <div class="dnum">04</div>
+        <span class="tag">Future story</span>
+        <h3>The Courier</h3>
+        <p>Travel between isolated settlements carrying supplies and secrets.</p>
+      </article>
+    </div>
+    <div class="c-bar"><i></i></div>
+  </div>
+</section>
+
+</main>
+
+<footer style="padding:30px 20px;text-align:center;color:#9aa6ad;border-top:1px solid rgba(255,255,255,0.05);margin-top:20px;">
+  <p>© 2026 Redwick Studios™. All Rights Reserved.</p>
+  <p>Some media may incorporate third-party assets licensed from their respective creators.</p>
+  <p><a href="license.html" style="color:#00d1ff;text-decoration:none;">Legal &amp; Licensing</a></p>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  const header=document.getElementById('siteHeader'), bar=document.getElementById('progress'), bimg=document.getElementById('bannerImg');
+
+  function onScroll(){
+    const h=document.documentElement, y=window.scrollY;
+    header.classList.toggle('solid',y>40);
+    bar.style.width=(y/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%';
+    if(bimg&&y<window.innerHeight)bimg.style.transform='translateY('+(y*.25)+'px)';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* hamburger menu */
+  const mBtn=document.getElementById('menuToggle'), mNav=document.getElementById('mobileNav');
+  function setMenu(o){mNav.classList.toggle('open',o);mBtn.setAttribute('aria-expanded',o);mBtn.textContent=o?'✕ Close':'☰ Menu';}
+  mBtn.addEventListener('click',e=>{e.stopImmediatePropagation();setMenu(!mNav.classList.contains('open'));});
+  mNav.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('click',e=>{if(!header.contains(e.target))setMenu(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+  window.addEventListener('resize',()=>{if(window.innerWidth>1020)setMenu(false);});
+
+  /* carousels */
+  document.querySelectorAll('.carousel').forEach(root=>{
+    const track=root.querySelector('.track'), prev=root.querySelector('.prev'), next=root.querySelector('.next'), cbar=root.querySelector('.c-bar i');
+    const cards=[...track.children];
+    let moved=false, down=false, sx=0, sl=0;
+    const step=()=>cards[0].offsetWidth+22;
+    function update(){
+      const max=track.scrollWidth-track.clientWidth, p=max>0?track.scrollLeft/max:0;
+      prev.disabled=track.scrollLeft<4; next.disabled=track.scrollLeft>max-4;
+      const w=Math.max(15,track.clientWidth/track.scrollWidth*100);
+      cbar.style.width=w+'%'; cbar.style.marginLeft=(p*(100-w))+'%';
+      const mid=track.scrollLeft+track.clientWidth/2; let best=null,d=1e9;
+      cards.forEach(c=>{const x=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(x<d){d=x;best=c;}});
+      cards.forEach(c=>c.classList.toggle('active',max<=4||c===best));
+    }
+    track.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update); update();
+    prev.addEventListener('click',()=>track.scrollBy({left:-step()}));
+    next.addEventListener('click',()=>track.scrollBy({left:step()}));
+    track.addEventListener('mousedown',e=>{down=true;moved=false;sx=e.pageX;sl=track.scrollLeft;});
+    window.addEventListener('mousemove',e=>{
+      if(!down)return; const dx=e.pageX-sx;
+      if(Math.abs(dx)>6){moved=true;track.classList.add('dragging');}
+      if(moved)track.scrollLeft=sl-dx;
+    });
+    window.addEventListener('mouseup',()=>{
+      if(!down)return; down=false; track.classList.remove('dragging');
+      if(moved){const i=Math.round(track.scrollLeft/step());track.scrollTo({left:i*step()});}
+    });
+    track.addEventListener('dragstart',e=>e.preventDefault());
+    track.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false;}},true);
+    track.tabIndex=0;
+    track.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight')track.scrollBy({left:step()});
+      if(e.key==='ArrowLeft')track.scrollBy({left:-step()});
+    });
+  });
+  /* Learn More — paste the story's page link between the quotes below */
+  const RUFFL_URL='';   // e.g. 'https://yourname.itch.io/ruffls-story'
+  const learn=document.getElementById('learn'), note=document.getElementById('moreNote');
+  learn.addEventListener('click',()=>{
+    if(RUFFL_URL){window.open(RUFFL_URL,'_blank','noopener');return;}
+    note.textContent=note.textContent?'':'More details coming soon.';
+  });
+
+})();
+</script>
+</body>
+</html>
